@@ -5,8 +5,8 @@ angular.element(document).ready(function() {
     if (window.location.hash === '#_=_') window.location.hash = '#!';
 
     //Then init the app
-    angular.bootstrap(document, ['mean']);
+    angular.bootstrap(document, ['karttapp']);
 
 });
 
-angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.articles','mean.auth']);
+angular.module('karttapp', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'karttapp.system', 'karttapp.gamemodes' ]);

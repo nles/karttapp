@@ -1,35 +1,38 @@
 'use strict';
 
-angular.module('mean.system').controller('HeaderController', ['$scope', '$rootScope', 'Global', 'Menus',
-    function($scope, $rootScope, Global, Menus) {
-        $scope.global = Global;
+angular.module('karttapp.system')
+.controller('HeaderController',['$scope', '$rootScope', 'Global', 'Menus', function($scope, $rootScope, Global, Menus) {
+  $scope.global = Global;
 
-        $scope.menus = {
-            main: [{
-                'roles': ['authenticated'],
-                'title': 'Articles',
-                'link': 'all articles'
-            }, {
-                'roles': ['authenticated'],
-                'title': 'Create New Article',
-                'link': 'create article'
-            }]
-        }
+  $scope.menus = {
+    main: [{
+      'roles': ['anonymous','authenticated'],
+      'title': 'Front',
+      'link': 'home'
+    },{
+      'roles': ['anonymous','authenticated'],
+      'title': 'Connect',
+      'link': 'connect'
+    },{
+      'roles': ['authenticated'],
+      'title': 'Update data',
+      'link': 'connect'
+    }]
+  }
 
-        Menus.query({
-            name: 'main'
-        }, function(mainMenu) {
-            $scope.menus.main = $scope.menus.main.concat(mainMenu);
-        });
+  Menus.query({
+    name: 'main'
+  }, function(mainMenu) {
+    $scope.menus.main = $scope.menus.main.concat(mainMenu);
+  });
 
-        $scope.isCollapsed = false;
+  $scope.isCollapsed = false;
 
-        $rootScope.$on('loggedin', function() {
-            $scope.global = {
-                authenticated: !! $rootScope.user,
-                user: $rootScope.user
-            };
-        });
+  $rootScope.$on('loggedin', function() {
+    $scope.global = {
+      authenticated: !! $rootScope.user,
+      user: $rootScope.user
+    };
+  });
 
-    }
-]);
+}]);
