@@ -1,0 +1,23 @@
+{
+  "cars": [
+    {
+      "name": "Volkswagen",
+      "country": "DEU"
+    },{
+      "name": "SEAT",
+      "country": "ESP"
+    },{
+      "name": "FIAT",
+      "country": "ITA"
+    },{
+      "name": "Toyota",
+      "country": "JPN"
+    },{
+      "name": "Ford",
+      "country": "USA"
+    },{
+      "name": "Lada",
+      "country": "RUS"
+    }
+  ]
+}
