@@ -4,8 +4,7 @@
 * Module dependencies
 */
 var mongoose = require('mongoose'),
-		Score = mongoose.model('Score'),
-		_ = requires('lodash');
+		Score = mongoose.model('Score');
 
 /**
 * Find scores by game
@@ -29,7 +28,7 @@ exports.scoresByGame = function(req, res, next, game) {
 exports.create = function(req, res, next) {
     var gamepoint = new Score(req.body);
 
-    gamepoint.provider = 'local';
+    //gamepoint.provider = 'local';
 
     //**because we set our user.provider to local our models/user.js validation will always be true
    // req.assert('email', 'You must enter a valid email address').isEmail();

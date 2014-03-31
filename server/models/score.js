@@ -16,12 +16,12 @@ var ScoreSchema = new Schema({
     required: true
   },
   gameid: {
-    type: int,
+    type: String,
     required: true
   },
   points: {
-    type: int,
-    required true
+    type: String,
+    required: true
   }
 });
 
@@ -65,7 +65,6 @@ ScoreSchema.methods = {
     switch (game) {
       case "pick_countries":
           return 1;
-          break;
     }
   }
 }

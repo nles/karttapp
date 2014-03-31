@@ -1,8 +1,8 @@
 {% extends 'layouts/default.html' %}
 {% block content %}
-<section id="ng-view" data-ui-view />
-<script type="text/javascript">
-  window.user = {{user|safe}};
-  window.roles = {{roles|safe}};
-</script>
+    <section data-ui-view />
+    <script type="text/javascript">
+        window.user = {{user|safe}};        
+        window.roles = {{roles|safe}};        
+    </script>
 {% endblock %}
