@@ -5,8 +5,8 @@ angular.module('karttapp.scoreboards')
 
   // states for different scoreboards
   $stateProvider
-  .state('scoreboard_connect', {
-    url: '/scoreboard/connect',
+  .state('scoreboard', {
+    url: '/scoreboard',
     templateUrl: 'public/scoreboards/views/connect.html',
     controller: 'ConnectController'
   });

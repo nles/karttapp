@@ -14,6 +14,10 @@ angular.module('karttapp.system')
       'title': 'Connect',
       'link': 'connect'
     },{
+      'roles': ['anonymous','authenticated'],
+      'title': 'Scoreboard',
+      'link': 'scoreboard'
+    },{
       'roles': ['authenticated'],
       'title': 'Update data',
       'link': 'connect'

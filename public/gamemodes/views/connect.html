@@ -45,3 +45,31 @@
     <a class="btn btn-primary accept-btn">OK</a>
   </div>
 </div>
+
+<div id="save-score-popup" class="white-popup-block mfp-hide">
+  <h1>Get your name in the hall-of-fame!</h1>
+  <form ng-submit="submitScore()" class="form-vertical">
+      <div class="form-group">
+          <label for="name" class="col-md-4 control-label">Name</label>
+          <div class="col-md-8">
+              <input id="name" type="text" name="name" placeholder="HI!" class="form-control" ng-model="score.player"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="points" class="col-md-4 control-label">Points</label>
+          <div class="col-md-8">
+              <input id="points" type="number" name="points" placeholder="{{$scope.points}}" class="form-control" ng-model="score.points" readonly/>
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-md-8">
+              <input id="gamemode" type="hidden" name="gamemode" placeholder="{{$rootScope.gameMode}}" class="form-control" ng-model="score.game"/>
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-md-offset-4 col-md-8">
+              <button type="submit" class="btn btn-primary">OK</button>
+          </div>
+      </div>
+  </form>
+</div>

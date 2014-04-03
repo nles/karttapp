@@ -13,4 +13,16 @@ angular.module('karttapp.gamemodes')
   // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
   window.initConnectGame();
 
+  $scope.saveScore = function(){
+    $http.post('/saveScore', {
+      player: $scope.score.player,
+      game: $scope.score.game,
+      points: $scope.score.points
+    })
+    .success(function(){
+      // authentication OK >> ohjaus scoreboard-sivulle..?
+      $location.url('/');
+
+    })};
+
 }]);

@@ -38,9 +38,20 @@ ScoreSchema.virtual('game').set(function(game){
 /**
 * Validations
 */
-var validatePresenceOf = function(value){
-  return value && value.length
+var validateName = function(value){
+  return value && value.length === 3
 }
+/**
+ * Pre-save hook
+ */
+ScoreSchema.pre('save', function(next) {
+  if(!validateName(this.player)){
+    next(new Error('Invalid name'));
+  }else{
+    return next();
+  }
+});
+
 
 ScoreSchema.path('player').validate(function(player){
   return(typeof player === 'string' && player.length === 3);
