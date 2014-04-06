@@ -4,5 +4,5 @@ var scores = require('../controllers/scores');
 
 module.exports = function(app,passport){
 	app.post('/saveScore',scores.create);
-	app.param('gameId',scores.scoreByGame);
+	//app.param('gameId',scores.scoreByGame);
 }

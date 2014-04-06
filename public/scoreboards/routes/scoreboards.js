@@ -8,7 +8,7 @@ angular.module('karttapp.scoreboards')
   .state('scoreboard', {
     url: '/scoreboard',
     templateUrl: 'public/scoreboards/views/connect.html',
-    controller: 'ConnectController'
+    controller: 'ConnectScoreController'
   });
 
 }])

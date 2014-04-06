@@ -1,10 +1,9 @@
-<div data-ng-controller="ConnectCtrl" data-ng-init="find(1)">
+<div>
   <ul id="score-list" class="list-group">
     <li class="list-group-item" ng-repeat="score in scores">{{score.name + " " + score.points}}</li>
   </ul>
-  <div data-ng-hide="!scores || scores.length">
-    <h1 data-ng-hide="!scores || scores.length">No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
-    <a href="/#!/gamemodes/connect">PLAY</a>
+  <div>
+    <h1 data-ng-show="!scores">No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
+    <a ng-href="/#!/game/connect">PLAY</a>
   </div>
-  
 </div>

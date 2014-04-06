@@ -9,4 +9,4 @@ angular.element(document).ready(function() {
 
 });
 
-angular.module('karttapp', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'karttapp.system', 'karttapp.gamemodes' ]);
+angular.module('karttapp', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'karttapp.system', 'karttapp.gamemodes', 'karttapp.scoreboards']);
