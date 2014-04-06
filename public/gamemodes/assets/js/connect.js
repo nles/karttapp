@@ -7,6 +7,7 @@ var activeCountryPolygon = null;
 var map = null;
 var question = null;
 var answer = null;
+var questionGroup = null;
 var setupMap = function(){
   // tässä vaiheessa angular on jo luonut scopen,
   // joten otetaan se käyttöön
@@ -48,8 +49,8 @@ var setupMap = function(){
               this.set("CLICKED",true);
               generatePopup('color-popup');
               // poistetaan vastaus
-              for(i in scope.questions){
-                if(scope.questions[i].country == cc) scope.questions.splice(i,1);
+              for(i in questions){
+                if(questions[i].country == cc) questions.splice(i,1);
               }
             } else {
               this.set("CLICKED",false)
@@ -77,7 +78,7 @@ var setupMap = function(){
             }
             // näytetään viesti
             scope.$apply(function(){
-              scope.roundMessages.push({text:"You guessed "+cc+", but that was incorrect"});
+              scope.roundMessages.push({text:"You guessed "+getCountryNameByCode(cc)+", but that was incorrect"});
             })
           }
         }
@@ -108,6 +109,7 @@ var setupMap = function(){
   })
   // popup aloituksesta
   $("#start-popup .btn").click(function(){
+    questionGroup = $(this).attr('data-group')
     startGame();
     $.magnificPopup.close();
   })
@@ -134,7 +136,7 @@ function startGame(){
   newRound();
 }
 function newRound(){
-  var questions = scope.questions;
+  questions = scope.questions[questionGroup];
   var random = Math.floor(Math.random() * questions.length)
   scope.$apply(function(){
     scope.question = questions[random].name;
@@ -183,4 +185,10 @@ function getActivePolygonCenter(){
 }
 function movePolygon(x,y){
   activeCountryPolygon.moveTo(new google.maps.LatLng(center.lat()+y, center.lng()+x))
+}
+function getCountryNameByCode(code){
+  var data = scope.country_data
+  for(var i in data){
+    if(data[i]['alpha-3'] == code) return data[i].name
+  }
 }

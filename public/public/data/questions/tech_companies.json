@@ -1,0 +1,23 @@
+{
+  "tech_companies": [
+    {
+      "name": "Greycon",
+      "country": "GBR"
+    },{
+      "name": "Nortal",
+      "country": "EST"
+    },{
+      "name": "Rostec",
+      "country": "RUS"
+    },{
+      "name": "Apple",
+      "country": "USA"
+    },{
+      "name": "Spotify",
+      "country": "SWE"
+    },{
+      "name": "Nokia",
+      "country": "FIN"
+    }
+  ]
+}

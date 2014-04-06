@@ -1,0 +1,23 @@
+{
+  "breeds_of_dog": [
+    {
+      "name": "Drever",
+      "country": "SWE"
+    },{
+      "name": "Rottweiler",
+      "country": "DEU"
+    },{
+      "name": "Labrador Husky",
+      "country": "CAN"
+    },{
+      "name": "Akita",
+      "country": "JPN"
+    },{
+      "name": "Kanni",
+      "country": "IND"
+    },{
+      "name": "Karelian Bear Dog",
+      "country": "FIN"
+    }
+  ]
+}
