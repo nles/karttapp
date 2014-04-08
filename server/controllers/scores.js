@@ -47,11 +47,20 @@ exports.create = function(req, res, next) {
 * List of scores
 */
 exports.all = function(req,res,next,id){
-    Score.find({gameid: id}).exec(function(err,users){
-        if(err) return next(err);
-        if(!users) return next(new Error('Failed to load scores'));
-        req.scores = scores;
-        next();
+    Score.find({gameid: id}).exec(function(err,scores){
+        if(err){
+            res.render('error',{
+                status: 500
+            });
+        } else {
+            res.jsonp(scores);
+        }
     })
 
+}
+/*
+* Show a score
+*/
+exports.show = function(req,res){
+    res.jsonp(req.score);
 }

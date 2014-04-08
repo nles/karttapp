@@ -1,9 +1,16 @@
 'use strict';
 
 angular.module('karttapp.scoreboards')
-.controller('ScoreboardsController', ['$scope', '$stateParams', '$location', 'Global', function ($scope, $stateParams, $location, Global) {
+.controller('ScoreboardController', ['$scope', '$stateParams', '$location', 'Global', 'Scoreboard' , function ($scope, $stateParams, $location, Global, Scoreboard) {
 
   $scope.global = Global;
-  // tässä olisi kaikille tulostauluille yhteisiä asioita...
+  
+  $scope.findScores = function(gameid){
+		Scoreboard.query(function(scores){
+			$scope.scores = scores;
+		})
+	}
+
+	$scope.findScores(1);
 
 }]);

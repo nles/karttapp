@@ -16,11 +16,11 @@ var ScoreSchema = new Schema({
     required: true
   },
   gameid: {
-    type: String,
+    type: Number,
     required: true
   },
   points: {
-    type: String,
+    type: Number,
     required: true
   }
 });
@@ -65,7 +65,9 @@ ScoreSchema.path('points').validate(function(points){
   return(typeof points === ' int' && points > -1);
 }, 'There is something wrong with the points you got');
 
-
+ScoreSchema.post('save', function(doc){
+  console.log('%s has been saved', doc.player);
+});
 
 
 /**

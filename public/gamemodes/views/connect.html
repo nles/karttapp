@@ -12,6 +12,12 @@
         </div>
       </div>
     </div>
+    <div id="points-and-multiply">
+      <div >
+        <input type="text" class="points" readonly />
+        <input type="text" class="multiply" readonly />
+      </div>
+    </div>
     <div id="status">
       <div ng-repeat="msg in roundMessages" class='alert alert-info'>{{msg.text}}</div>
     </div>
@@ -46,19 +52,19 @@
   </div>
 </div>
 
-<div id="save-score-popup" class="white-popup-block mfp-hide">
+<div id="savescore-popup" class="white-popup-block mfp-hide">
   <h1>Get your name in the hall-of-fame!</h1>
-  <form ng-submit="submitScore()" class="form-vertical">
+  <form ng-submit="submitScore()" class="form-horizontal">
       <div class="form-group">
           <label for="name" class="col-md-4 control-label">Name</label>
           <div class="col-md-8">
-              <input id="name" type="text" name="name" placeholder="HI!" class="form-control" ng-model="score.player"/>
+              <input id="name" type="text" name="name" placeholder="HI!" ng-pattern="/^[A-Z]{1,3}$/" ng-maxlength="3" class="form-control" ng-model="score.player" required/>
           </div>
       </div>
       <div class="form-group">
           <label for="points" class="col-md-4 control-label">Points</label>
           <div class="col-md-8">
-              <input id="points" type="number" name="points" placeholder="{{$scope.points}}" class="form-control" ng-model="score.points" readonly/>
+              <input id="points" type="number" name="points" placeholder="" class="form-control" ng-model="score.points" readonly/>
           </div>
       </div>
       <div class="form-group">

@@ -3,9 +3,14 @@
 angular.module('karttapp.gamemodes')
 .controller('ConnectController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
 
-  // ns. virallinen nimi pelimoodille
-  $rootScope.gameMode = 'connect'
+  // pelimoodin id tietokantaa varten
+  $rootScope.gameMode = 1;
+  // pelimoodin nimi
   $scope.pageHeader = "Connect country & thing";
+  // pisteiden alustus
+  $scope.points = 0;
+  // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
+  $scope.multiply = 0;
   // kysymykset - haetaan ulkoisesta lähteestä:
   $scope.questions = {}
   $http.get('/public/public/data/questions/cars.json').success(function(data) {

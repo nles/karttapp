@@ -4,5 +4,10 @@ var scores = require('../controllers/scores');
 
 module.exports = function(app,passport){
 	app.post('/saveScore',scores.create);
-	//app.param('gameId',scores.scoreByGame);
+	
+
+	app.get('/scoreboard/:gameId', scores.show)
+
+
+	app.param('gameId',scores.score);
 }

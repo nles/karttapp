@@ -8,6 +8,8 @@ var map = null;
 var question = null;
 var answer = null;
 var questionGroup = null;
+var points = 0;
+var multiply = 0;
 var setupMap = function(){
   // tässä vaiheessa angular on jo luonut scopen,
   // joten otetaan se käyttöön
@@ -45,6 +47,8 @@ var setupMap = function(){
           // toimet jos vastaus on oikein
           if(cc == answer){
             if(this.get("CLICKED") == 'undefined' || !this.get("CLICKED")){
+              points += 10*(1+multiply);
+              multiply += 1;
               clearTimer();
               this.set("CLICKED",true);
               generatePopup('color-popup');
@@ -61,6 +65,7 @@ var setupMap = function(){
             }
           // toimet jos vastaus on väärin
           } else {
+            multiply = 0;
             this.setOptions({
               "fillOpacity":1,
               "strokeWeight":1
@@ -136,21 +141,28 @@ function startGame(){
   newRound();
 }
 function newRound(){
+  $("#points-and-multiply .points").val(points);
+  $("#points-and-multiply .multiply").val(multiply);
   questions = scope.questions[questionGroup];
-  var random = Math.floor(Math.random() * questions.length)
-  scope.$apply(function(){
-    scope.question = questions[random].name;
-    scope.roundMessages = [];
-  })
-  question = questions[random].name;
-  answer = questions[random].country;
-  // tyhjätään ja aloitetaan kello
-  clearTimer();
-  roundClock = window.setInterval(function(){
-    var progressBarWidth = progressBar.width();
-    progressBar.width(progressBarWidth + 20);
-    if(progressBarWidth >= progressBarWrapperWidth) window.clearInterval(roundClock)
-  }, 1000)
+  if(questions.length > 0){
+    var random = Math.floor(Math.random() * questions.length)
+    scope.$apply(function(){
+      scope.question = questions[random].name;
+      scope.roundMessages = [];
+    })
+    question = questions[random].name;
+    answer = questions[random].country;
+    // tyhjätään ja aloitetaan kello
+    clearTimer();
+    roundClock = window.setInterval(function(){
+      var progressBarWidth = progressBar.width();
+      progressBar.width(progressBarWidth + 20);
+      if(progressBarWidth >= progressBarWrapperWidth) window.clearInterval(roundClock)
+    }, 1000)
+  }else{
+    endGame();
+  }
+  
 }
 function clearTimer(){
   window.clearInterval(roundClock)
@@ -191,4 +203,8 @@ function getCountryNameByCode(code){
   for(var i in data){
     if(data[i]['alpha-3'] == code) return data[i].name
   }
+}
+function endGame(){
+  generatePopup('savescore-popup');
+
 }
