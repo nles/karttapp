@@ -1,7 +1,7 @@
 /* pick_countries moodi */
 .container { }
 #overlay-wrapper {
-  position: absolute; top: 20px; left: 90px;
+  position: absolute; top: 20px; left: 20px;
   width: 300px;
   height: 50px;
 }

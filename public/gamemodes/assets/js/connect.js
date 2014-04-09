@@ -10,23 +10,68 @@ var answer = null;
 var questionGroup = null;
 var points = 0;
 var multiply = 0;
+var mapStyle = null;
 var setupMap = function(){
   // tässä vaiheessa angular on jo luonut scopen,
   // joten otetaan se käyttöön
   scope = angular.element($("#ng-view")).scope()
   //Kartan luonti, lat&lng+zoom kohdilleen, jotta näkymä oikein
   //Kartan zoomauksen ja siirtämisen esto?
+  mapStyle = [
+    {
+     featureType: "water",
+     elementType: "labels",
+     stylers: [
+      {visibility:"off"}
+     ] 
+    },
+    {
+      featureType: "road",
+      elementType: "all",
+      stylers: [
+        {visibility:"off"}
+      ]
+    },
+    {
+      featureType: "poi",
+      elementType: "all",
+      stylers: [
+        {visibility:"off"}
+      ]
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "all",
+      stylers:[
+        {visibility:"off"}
+      ]
+    },
+    {
+      featureType: "administrative.province",
+      elementType: "all",
+      stylers:[
+        {visibility:"off"}
+      ]
+    }
+  ];
   map = new GMaps({
     disableDoubleClickZoom: true,
     div:"#gmaps",
     height: '100%',
-    lat: 50,
+    lat: 30,
     lng: 20,
-    zoom: 4,
-    controls:{
-      zoomControl: false
-    }
+    zoom: 3,
+    disableDefaultUI:true,
+    minZoom: 3,
+    maxZoom: 6,
+    mapTypeControlOptions:{
+      mapTypeIds: [
+        'mapstyle'
+      ]
+    },
+    mapTypeId: 'mapstyle'
   })
+  map.map.mapTypes.set('mapstyle', new google.maps.StyledMapType(mapStyle,{name:"mapstyle"}))
   //Layeri jokaiselle maalle
   $.getJSON("public/public/data/countries/countries.geo.json",function(data){
     for(i in data.features){
