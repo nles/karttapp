@@ -4,8 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    crypto = require('crypto');
+    Schema = mongoose.Schema;
 
 /**
 * Gamepoint Schema
@@ -25,15 +24,15 @@ var ScoreSchema = new Schema({
   }
 });
 
-/**
-* Virtuals
-*/
+/** Virtuals
+
 ScoreSchema.virtual('game').set(function(game){
   this._game = game;
   this.gameid = getId(game);
 }).get(function(){
   return this._game;
-})
+})*/
+
 
 /**
 * Validations

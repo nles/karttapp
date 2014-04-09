@@ -6,11 +6,11 @@ angular.module('karttapp.scoreboards')
   $scope.global = Global;
   
   $scope.findScores = function(gameid){
-		Scoreboard.query(function(scores){
+		Scoreboard.get({
+			gameid: 1
+		}, function(scores){
 			$scope.scores = scores;
-		})
+		});
 	}
-
-	$scope.findScores(1);
 
 }]);

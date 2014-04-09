@@ -5,8 +5,8 @@ angular.module('karttapp.scoreboards').factory('Scoreboard', ['$resource', funct
   // tämän olisi kaiketi tarkoitus hakea pisteet valitulle pelimoodille
   // mutta nyt ei ainakaan toimi koska ei löydy backendistä osoitetta /scoreboard
   // korvattu siis väliaikaisesti tyhjyydellä (yllä)
-  return $resource('scoreboard/:gameId', {
-    gameId: '@_id'
+  return $resource('scoreboard/:gameid', {
+    gameid: 1
   }, {
     update: {
       method: 'PUT'

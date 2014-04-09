@@ -9,13 +9,14 @@ var mongoose = require('mongoose'),
 /**
 * Find scores by gameid
 */
-exports.score = function(req, res, next, gameid) {
-    Score.load(gameid, function(err, score) {
-        if (err) return next(err);
-        if (!score) return next(new Error('Failed to load score ' + gameid));
-        req.score = score;
-        next();
-    });
+exports.score = function(req, res, next,id) {
+    Score.find({gameid: id}).exec(function(err,score){
+        if(err){
+
+        }else{
+            req.scores = score
+        }
+    })
 };
 
 /**
@@ -46,8 +47,8 @@ exports.create = function(req, res, next) {
 *
 * List of scores
 */
-exports.all = function(req,res,next,id){
-    Score.find({gameid: id}).exec(function(err,scores){
+exports.all = function(req,res,next){
+    Score.find().exec(function(err,scores){
         if(err){
             res.render('error',{
                 status: 500
@@ -62,5 +63,5 @@ exports.all = function(req,res,next,id){
 * Show a score
 */
 exports.show = function(req,res){
-    res.jsonp(req.score);
+    res.jsonp(req.scores);
 }
