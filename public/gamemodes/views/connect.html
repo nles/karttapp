@@ -1,25 +1,23 @@
 <div id="gmaps"></div>
-<div id="overlay-wrapper">
+<div id="overlay-wrapper" style="display:none">
   <div id='overlay-content'>
-    <div id="overlay-actions">
-      <a class='btn btn-primary' ng-href="/#/about">Back game modes</a>
-      <a class='btn btn-primary'>New question</a>
-    </div>
     <div id="round-info">
-      <h4>Where does {{question}} come from?</h4>
+      <h3>Where does {{question}} come from?</h3>
       <div class="progress progress-striped active">
         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
         </div>
       </div>
     </div>
     <div id="points-and-multiply">
-      <div >
-        <input type="text" class="points" readonly />
-        <input type="text" class="multiply" readonly />
+      <div>
+        points <span class="label label-info">{{points}}</span>
+        &nbsp;
+        multiplier <span class="label label-{{multiplierEffect[multiplier]}}">{{multiplier}}</span>
+        <a class='btn btn-primary btn-xs' onclick="window.skipConnectQuestion()">Skip this question</a>
       </div>
     </div>
-    <div id="status">
-      <div ng-repeat="msg in roundMessages" class='alert alert-info'>{{msg.text}}</div>
+    <div id="status" style="display:none">
+      <div ng-repeat="msg in roundMessages" class='alert alert-{{msg.type}}'><span ng-bind-html='msg.text | unsafe'></div>
     </div>
   </div>
 </div>
@@ -33,19 +31,32 @@
   </div>
 </div>
 
-<div id="start-popup" class="white-popup-block mfp-hide">
-  <h2>Select your question group</h2>
-  <div id="question-group-list" class="btn-group-vertical">
-    <div class="btn btn-default" data-group='cars'>Car manufacturers</div>
-    <div class="btn btn-default" data-group='breeds_of_dog'>Breeds of dog</div>
-    <div class="btn btn-default" data-group='tech_companies'>Tech companies</div>
+<div id="start-popup" class="white-popup-block">
+  <div class="preloader" style="display:none">
+    <img src="/public/gamemodes/assets/images/loader.gif" />
+    <br /><br />
+    Starting the game...
+  </div>
+  <div class="popup-content">
+    <h1>Connect a country and a thing</h1>
+    <p>In this game, your goal is simply to connect a country and a thing.</p>
+    <p>You get points from every correct answer. Each round gives a default of
+    10 points, but you can multiply that by answering correctly.
+    The multiplier is reset if you are too slow, answer incorrectly or skip a question. Good luck!</p>
+    <h2>Select a question group</h2>
+    <div id="question-group-list" class="btn-group-vertical">
+      <div class="btn btn-default" data-group='cars'>Car manufacturers</div>
+      <div class="btn btn-default" data-group='breeds_of_dog'>Breeds of dog</div>
+      <div class="btn btn-default" data-group='tech_companies'>Tech companies</div>
+    </div>
   </div>
 </div>
 
 <div id="color-popup" class="white-popup-block mfp-hide">
-  <h4>Correct answer! Give a color to the country</h4>
+  <h2 class="message"></h2>
   <div id="color-select">
-    <input type="text" value="000" name="country-color" class="pick-a-color form-control">
+  </div>
+  <div id="selected-color" data-default-text="no color selected">
   </div>
   <div id="actions">
     <a class="btn btn-primary accept-btn">OK</a>
@@ -55,6 +66,7 @@
 <div id="savescore-popup" class="white-popup-block mfp-hide">
   <h1>Get your name in the hall-of-fame!</h1>
   <form ng-submit="submitScore()" class="form-horizontal">
+      <input id="gameid" type="hidden" name="gameid" placeholder="{{$rootScope.gameMode}}" class="form-control" ng-model="score.gameid"/>
       <div class="form-group">
           <label for="name" class="col-md-4 control-label">Name</label>
           <div class="col-md-8">
@@ -64,12 +76,7 @@
       <div class="form-group">
           <label for="points" class="col-md-4 control-label">Points</label>
           <div class="col-md-8">
-              <input id="points" type="number" name="points" placeholder="" class="form-control" ng-model="score.points" readonly/>
-          </div>
-      </div>
-      <div class="form-group">
-          <div class="col-md-8">
-              <input id="gameid" type="hidden" name="gameid" placeholder="{{$rootScope.gameMode}}" class="form-control" ng-model="score.gameid"/>
+            <input id="points" type="number" name="points" value="{{points}}" placeholder="{{points}}" class="form-control" ng-model="score.points" readonly/>
           </div>
       </div>
       <div class="form-group">

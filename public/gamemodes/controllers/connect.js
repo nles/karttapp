@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('karttapp.gamemodes')
-.controller('ConnectController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+.controller('ConnectController', ['$scope', '$rootScope', '$http', 'GameMode', function ($scope, $rootScope, $http, GameMode) {
 
   // pelimoodin id tietokantaa varten
   $rootScope.gameMode = 1;
@@ -10,7 +10,8 @@ angular.module('karttapp.gamemodes')
   // pisteiden alustus
   $scope.points = 0;
   // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
-  $scope.multiply = 0;
+  $scope.multiplier = 0;
+  $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
   // kysymykset - haetaan ulkoisesta lähteestä:
   $scope.questions = {}
   $http.get('/public/public/data/questions/cars.json').success(function(data) {
@@ -26,6 +27,12 @@ angular.module('karttapp.gamemodes')
   $http.get('/public/public/data/countries/country_data.json').success(function(data) {
     $scope.country_data = data;
   });
+
+  // estetään tilan vaihtaminen kesken pelin
+  $scope.gameStarted = GameMode.gameStarted();
+  $scope.startGame = function(){ GameMode.startGame(); }
+  $scope.endGame = function(){ GameMode.endGame(); }
+
   // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
   window.initConnectGame();
 
@@ -38,7 +45,7 @@ angular.module('karttapp.gamemodes')
     .success(function(){
       // authentication OK >> ohjaus scoreboard-sivulle..?
       $location.url('/');
-
-    })};
+    });
+  };
 
 }]);

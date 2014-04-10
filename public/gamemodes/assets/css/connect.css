@@ -17,6 +17,9 @@
   padding: 7px 10px; background-color: #eee;
   border: 1px solid #999;
 }
+#round-info .progress {
+  margin-bottom: 7px;
+}
 #status {
   margin-top: 10px;
   padding: 8px; background-color: #eee;
@@ -27,6 +30,9 @@
   padding: 8px; background-color: #eee;
   border: 1px solid #999;
 }
+#points-and-multiply .btn {
+  float: right;
+}
 .alert { font-size: 11px; padding: 5px 7px; margin-bottom: 8px; }
 .alert:last-child { margin: 0px; }
 
@@ -34,12 +40,18 @@
 #start-popup  #question-group-list .btn {
   width: 100%;
 }
+#start-popup .preloader {
+  text-align: center;
+}
 
 #color-popup #color-select {
   float: left; width: 50px;
 }
+#color-popup #selected-color {
+  float: left;
+}
 #color-popup #actions {
-  float: left; margin-left: 5px;
+  float: right;
 }
 
 #gmaps {
