@@ -128,7 +128,7 @@ var setupMap = function(callback){
                 answerCountry = getCountryNameByCode(cc);
                 addMessage("You answered <strong>"+answerCountry+"</strong> correctly!","success");
                 scope.$apply(function(){
-                  scope.points += 100*(1+scope.multiplier)*(Math.round((progressBarWrapperWidth - progressBar.width())/10));
+                  scope.points += 100*(1+scope.multiplier)*(100-Math.round(progressBar.width()/progressBarWrapper.width()*100));
                   scope.multiplier += 1;
                 })
                 clearTimer();
