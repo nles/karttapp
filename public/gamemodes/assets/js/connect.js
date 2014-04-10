@@ -128,7 +128,7 @@ var setupMap = function(callback){
                 answerCountry = getCountryNameByCode(cc);
                 addMessage("You answered <strong>"+answerCountry+"</strong> correctly!","success");
                 scope.$apply(function(){
-                  scope.points += 10*(1+scope.multiplier);
+                  scope.points += 100*(1+scope.multiplier)*(Math.round((progressBarWrapperWidth - progressBar.width())/10));
                   scope.multiplier += 1;
                 })
                 clearTimer();
@@ -351,5 +351,7 @@ function getCountryNameByCode(code){
   }
 }
 function endGame(){
+  scope.score.points = scope.points;
+  scope.score.gameid = scope.gameMode;
   generatePopup('savescore-popup');
 }

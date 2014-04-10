@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('karttapp.gamemodes')
-.controller('ConnectController', ['$scope', '$rootScope', '$http', 'GameMode', function ($scope, $rootScope, $http, GameMode) {
-
+.controller('ConnectController', ['$scope', '$rootScope', '$http', '$location', 'GameMode', function ($scope, $rootScope, $http, $location, GameMode) {
+  $scope.score = {};
   // pelimoodin id tietokantaa varten
   $rootScope.gameMode = 1;
   // pelimoodin nimi
@@ -43,9 +43,13 @@ angular.module('karttapp.gamemodes')
       points: $scope.score.points
     })
     .success(function(){
-      // authentication OK >> ohjaus scoreboard-sivulle..?
-      $location.url('/');
+      // tallennus OK >> ohjaus scoreboard-sivulle..?
+      $location.url('/scoreboard');
+    })
+    .error(function(data,status){
+      console.log("error "+status+" with "+data);
     });
+  
   };
 
 }]);

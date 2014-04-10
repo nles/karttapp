@@ -24,19 +24,10 @@ exports.score = function(req, res, next,id) {
 */
 exports.create = function(req, res, next) {
     var score = new Score(req.body);
-
+    console.log(req.body);
     score.save(function(err) {
         if (err) {
-            switch (err.code) {
-                case 11000:
-                case 11001:
-                    res.status(400).send('Please fill all the required fields');
-                    break;
-                default:
-                    res.status(400).send('Please fill all the required fields');
-            }
-
-            return res.status(400);
+            return res.status(400).send('Please fill all the required fields (error '+err+')');
         }else{
             res.jsonp(score);
         }

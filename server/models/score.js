@@ -57,11 +57,11 @@ ScoreSchema.path('player').validate(function(player){
 },'Player must be 3 letter length');
 
 ScoreSchema.path('gameid').validate(function(gameid){
-  return (typeof gameid === 'int' && gameid > 0);
+  return (typeof gameid === 'number' && gameid > 0);
 }, 'There is something wrong with the game_id');
 
 ScoreSchema.path('points').validate(function(points){
-  return(typeof points === ' int' && points > -1);
+  return(typeof points === 'number' && points > -1);
 }, 'There is something wrong with the points you got');
 
 ScoreSchema.post('save', function(doc){
