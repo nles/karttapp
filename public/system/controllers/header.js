@@ -7,7 +7,7 @@ angular.module('karttapp.system')
   $scope.menus = {
     main: [{
       'roles': ['anonymous','authenticated'],
-      'title': 'Front',
+      'title': 'Home',
       'link': 'home'
     },{
       'roles': ['anonymous','authenticated'],
@@ -15,7 +15,7 @@ angular.module('karttapp.system')
       'link': 'connect'
     },{
       'roles': ['anonymous','authenticated'],
-      'title': 'Scoreboard',
+      'title': 'Hall-Of-Fame',
       'link': 'scoreboard'
     },{
       'roles': ['authenticated'],

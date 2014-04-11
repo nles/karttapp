@@ -1,18 +1,17 @@
 'use strict';
 
 angular.module('karttapp.scoreboards')
-.controller('ConnectScoreController', ['$scope','$rootScope','Scoreboard',function($scope,$rootScope,Scoreboard){
-	//id vai nimi?
-	$rootScope.gameMode = '1';
-	// jos gamemode nimi - ei pageHeader tarvi erikseen 'connect'
-	$scope.pageHeader = 'Scoreboard - connect';
+.controller('ScoreboardController', ['$scope', '$stateParams', '$location', 'Global', 'Scoreboard' , function ($scope, $stateParams, $location, Global, Scoreboard) {
 
-	$scope.findScores = function(gameid){
+  $scope.global = Global;
+  $scope.orderProp = "points";
+  $scope.reverse = function(items){
+  		return items.slice().reverse();
+  }
+  $scope.findScores = function(){
 		Scoreboard.query(function(scores){
 			$scope.scores = scores;
 		})
 	}
-
-  $scope.findScores()
 
 }]);

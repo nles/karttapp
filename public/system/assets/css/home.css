@@ -1,0 +1,13 @@
+#connect_ad_container{
+  position:absolute;
+  top: 15%;
+}
+#text_over_img{
+  position:absolute;
+  background-color: rgba(0,0,0,0.75);
+  color: white;
+  width: 45%;
+  bottom: 2%;
+  right: 2%;
+  padding: 8px;
+}

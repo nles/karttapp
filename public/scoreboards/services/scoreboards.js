@@ -6,7 +6,7 @@ angular.module('karttapp.scoreboards').factory('Scoreboard', ['$resource', funct
   // mutta nyt ei ainakaan toimi koska ei löydy backendistä osoitetta /scoreboard
   // korvattu siis väliaikaisesti tyhjyydellä (yllä)
   return $resource('scoreboard/:gameid', {
-    gameid: 1
+    gameid: '@_id'
   }, {
     update: {
       method: 'PUT'

@@ -1,11 +1,44 @@
-<section data-ng-controller="ScoreboardController" data-ng-init="findScores(1)">
-	<div>
-	  <ul id="score-list" class="list-group">
-	    <li class="list-group-item" ng-repeat="score in scores">{{score.name + " " + score.points}}</li>
-	  </ul>
+<section data-ng-controller="ScoreboardController" data-ng-init="findScores()">
+	<div class="hall-of-fame">
+		<div class="jumbotron">
+			<h1 class="text-center">{{tableTitle}}</h1>
+			<h1 class="text-center">{{tableSubTitle}}</h1>
+		</div>
+		<div class="btn-group btn-group-justified">
+		  <div class="btn-group">
+		  	<form ng-submit="setGame(1)">
+		  		<button type="submit" class="btn btn-success">Connect</button>
+		  	</form> 
+		  </div>
+		 	<div class="btn-group">
+		  	<form ng-submit="setGame(2)">
+		  		<button type="submit" class="btn btn-info">Something else</button>
+		  	</form> 
+		  </div>
+		  <div class="btn-group">
+		  	<form ng-submit="setGame(3)">
+		  		<button type="submit" class="btn btn-warning">Anything above</button>
+		  	</form> 
+		  </div>
+		</div>
+			
+	  	<table class="table table-striped table-hover">
+	  		<thead>
+	  			<tr>
+	  				<th>#</th><th>Player</th><th>Points</th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  			<tr ng-repeat="score in scores |orderBy:orderProp:reverse | filter:filterBy:limit">
+	  				<th>{{$index+1}}</th>
+	  				<th>{{score.player}}</th>
+	  				<th>{{score.points}}</th>
+	  			</tr>
+	  		</tbody>
+	  	</table>
 	  <div>
 	    <h1 data-ng-show="!scores">No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
-	    <a ng-href="/#!/game/connect">PLAY</a>
+	    <a data-ng-show="!scores" ng-href="/#!/game/connect">PLAY</a>
 	  </div>
 	</div>
 </section>
