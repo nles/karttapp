@@ -11,7 +11,7 @@
 		  	</form> 
 		  </div>
 		 	<div class="btn-group">
-		  	<form ng-submit="setGame(2)">
+		  	<form ng-submit="findOne(1)">
 		  		<button type="submit" class="btn btn-info">Something else</button>
 		  	</form> 
 		  </div>
@@ -29,16 +29,16 @@
 	  			</tr>
 	  		</thead>
 	  		<tbody>
-	  			<tr ng-repeat="score in scores |orderBy:orderProp:reverse | filter:filterBy:limit">
+	  			<tr ng-repeat="score in scores |orderBy:orderProp:reverse | filter:filterBy | limitTo:quantityOfScores">
 	  				<th>{{$index+1}}</th>
 	  				<th>{{score.player}}</th>
 	  				<th>{{score.points}}</th>
 	  			</tr>
 	  		</tbody>
 	  	</table>
-	  <div>
-	    <h1 data-ng-show="!scores">No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
-	    <a data-ng-show="!scores" ng-href="/#!/game/connect">PLAY</a>
+	  <div data-ng-show="!scores || isEmpty">
+	    <h1>No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
+	    <a ng-href="/#!/game/connect">PLAY</a>
 	  </div>
 	</div>
 </section>
