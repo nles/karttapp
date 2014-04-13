@@ -7,12 +7,8 @@ angular.module('karttapp.system')
   $scope.menus = {
     main: [{
       'roles': ['anonymous','authenticated'],
-      'title': 'Home',
+      'title': 'Game Modes',
       'link': 'home'
-    },{
-      'roles': ['anonymous','authenticated'],
-      'title': 'Connect',
-      'link': 'connect'
     },{
       'roles': ['anonymous','authenticated'],
       'title': 'Hall-Of-Fame',
@@ -30,7 +26,7 @@ angular.module('karttapp.system')
     $scope.menus.main = $scope.menus.main.concat(mainMenu);
   });
 
-  $scope.isCollapsed = false;
+  $scope.isCollapsed = true;
 
   $rootScope.$on('loggedin', function() {
     $scope.global = {
