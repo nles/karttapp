@@ -4,11 +4,18 @@ angular.module('karttapp.scoreboards')
 .controller('ScoreboardController', ['$scope', '$stateParams', '$location', 'Global', 'Scoreboard' , function ($scope, $stateParams, $location, Global, Scoreboard) {
 
   $scope.global = Global;
-
+  $scope.quantityOfScores = 10;
   $scope.tableTitle = "Hall-Of-Fame";
   $scope.tableSubTitle = "Pick one";
   $scope.orderProp = "points";
   $scope.gameid = 0;
+  $scope.isEmpty = function(){
+    if(scores.length == 0){
+      return true
+    }else{
+      return false
+    }
+  }
   $scope.setGame = function(gameid){
   	switch(gameid){
   		case 1:
@@ -16,7 +23,6 @@ angular.module('karttapp.scoreboards')
   			break
   		default:
   			$scope.tableSubTitle = "Pick one"
-
   	}
   	$scope.gameid = gameid;
   }
@@ -38,5 +44,12 @@ angular.module('karttapp.scoreboards')
 			$scope.scores = scores;
 		})
 	}
+  $scope.findOne = function(id){
+    Scoreboard.get({
+      gameid: id
+    },function(scores){
+      $scope.scores = scores;
+    })
+  }
 
 }]);

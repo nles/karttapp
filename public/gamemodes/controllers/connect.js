@@ -37,6 +37,7 @@ angular.module('karttapp.gamemodes')
   window.initConnectGame();
 
   $scope.submitScore = function(){
+    $.magnificPopup.close();
     $http.post('/saveScore', {
       player: $scope.score.player,
       gameid: $scope.score.gameid,
@@ -44,7 +45,8 @@ angular.module('karttapp.gamemodes')
     })
     .success(function(){
       // tallennus OK >> ohjaus scoreboard-sivulle..?
-      $location.url('/scoreboard');
+      //sulje popup.
+      $location.url('/scoreboard/'+$scope.score.gameid);
     })
     .error(function(data,status){
       console.log("error "+status+" with "+data);

@@ -68,7 +68,9 @@ ScoreSchema.post('save', function(doc){
   console.log('%s has been saved', doc.player);
 });
 
-
+ScoreSchema.statics.load = function(id,cb){
+  this.find({gameid: id}).exec(cb);
+}
 /**
 * Methods
 */
