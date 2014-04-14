@@ -9,6 +9,11 @@ angular.module('karttapp.gamemodes')
     url: '/game/connect',
     templateUrl: 'public/gamemodes/views/connect.html',
     controller: 'ConnectController'
+  })
+  .state('trivia', {
+    url: '/game/trivia',
+    templateUrl: 'public/gamemodes/views/trivia.html',
+    controller: 'TriviaController'
   });
 
 }])
