@@ -23,10 +23,6 @@ angular.module('karttapp.gamemodes')
   $http.get('/public/public/data/questions/tech_companies.json').success(function(data) {
     $scope.questions.tech_companies = data.tech_companies;
   });
-  // maakohtaiset tiedot
-  $http.get('/public/public/data/countries/country_data.json').success(function(data) {
-    $scope.country_data = data;
-  });
 
   // estetään tilan vaihtaminen kesken pelin
   $scope.gameStarted = GameMode.gameStarted();
@@ -34,7 +30,7 @@ angular.module('karttapp.gamemodes')
   $scope.endGame = function(){ GameMode.endGame(); }
 
   // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
-  window.initConnectGame();
+  window.Connect.init();
 
   $scope.submitScore = function(){
     $.magnificPopup.close();
@@ -46,12 +42,13 @@ angular.module('karttapp.gamemodes')
     .success(function(){
       // tallennus OK >> ohjaus scoreboard-sivulle..?
       //sulje popup.
-      $location.url('/scoreboard/'+$scope.score.gameid);
+      $scope.endGame();
+      $location.url('/scoreboard');
     })
     .error(function(data,status){
       console.log("error "+status+" with "+data);
     });
-  
+
   };
 
 }]);

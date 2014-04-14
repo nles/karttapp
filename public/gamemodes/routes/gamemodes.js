@@ -10,10 +10,10 @@ angular.module('karttapp.gamemodes')
     templateUrl: 'public/gamemodes/views/connect.html',
     controller: 'ConnectController'
   })
-  .state('trivia', {
-    url: '/game/trivia',
-    templateUrl: 'public/gamemodes/views/trivia.html',
-    controller: 'TriviaController'
+  .state('flagger', {
+    url: '/game/flagger',
+    templateUrl: 'public/gamemodes/views/flagger.html',
+    controller: 'FlaggerController'
   });
 
 }])

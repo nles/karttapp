@@ -1,52 +1,4 @@
 /* pick_countries moodi */
-.container { }
-#overlay-wrapper {
-  position: absolute; top: 20px; left: 20px;
-  width: 300px;
-  height: 50px;
-}
-#overlay-content {
-}
-#overlay-actions {
-  padding: 7px 10px;
-  background-color: #eee;
-  border: 1px solid #999;
-}
-#round-info {
-  margin-top: 10px;
-  padding: 7px 10px; background-color: #eee;
-  border: 1px solid #999;
-}
-#round-info .progress {
-  margin-bottom: 7px;
-}
-#status {
-  margin-top: 10px;
-  padding: 8px; background-color: #eee;
-  border: 1px solid #999;
-}
-#points-and-multiply{
-  margin-top: 10px;
-  padding: 8px; background-color: #eee;
-  border: 1px solid #999;
-}
-#points-and-multiply .caption {
-  font-size: 11px; font-weight: bold;
-}
-#points-and-multiply .btn {
-  float: right;
-}
-.alert { font-size: 11px; padding: 5px 7px; margin-bottom: 8px; }
-.alert:last-child { margin: 0px; }
-
-#start-popup  #question-group-list,
-#start-popup  #question-group-list .btn {
-  width: 100%;
-}
-#start-popup .preloader {
-  text-align: center;
-}
-
 #color-popup #color-select {
   float: left; width: 50px;
 }
@@ -56,32 +8,3 @@
 #color-popup #actions {
   float: right;
 }
-
-#gmaps {
-  width: 100%; height 100%;
-}
-
-#gmaps .overlay {
-  display:block;
-  text-align:center;
-  color:#000;
-  font-size:18px;
-  opacity:0.8;
-  background:#eee;
-  border:solid 3px #336699;
-  border-radius:4px;
-  box-shadow:2px 2px 10px #333;
-  text-shadow:1px 1px 1px #666;
-  padding:0 4px;
-}
-
-.white-popup-block {
-  position: relative;
-  background: #FFF;
-  padding: 20px;
-  width: auto;
-  max-width: 500px;
-  margin: 20px auto;
-  display: table;
-}
-
