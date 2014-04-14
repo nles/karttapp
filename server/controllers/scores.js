@@ -10,8 +10,7 @@ var mongoose = require('mongoose'),
 * Find scores by gameid
 */
 exports.scores = function(req, res, next, gameid) {
-  
-  Score.load(gameid, function(err, scores) {
+  Score.load(gameid, function(err, scores) { 
     if (err) return next(err);
     if (!scores) return next(new Error('Failed to load scores with id: ' + id));
     req.scores = scores;
@@ -24,7 +23,6 @@ exports.scores = function(req, res, next, gameid) {
 */
 exports.create = function(req, res, next) {
   var score = new Score(req.body);
-  console.log(req.body);
   score.save(function(err) {
     if (err) {
       return res.status(400).send('Please fill all the required fields (error '+err+')');
@@ -39,21 +37,20 @@ exports.create = function(req, res, next) {
 * List of scores
 */
 exports.all = function(req,res,next){
-    Score.find().exec(function(err,scores){
-        if(err){
-            res.render('error',{
-                status: 500
-            });
-        } else {
-            res.jsonp(scores);
-        }
-    })
+  Score.find().sort('points').exec(function(err,scores){
+    if(err){
+      res.render('error',{
+        status: 500
+      });
+    } else {
+      res.jsonp(scores);
+    }
+  })
 
 }
 /*
 * Show a score
 */
 exports.show = function(req,res){
-
-    res.jsonp(req.scores);
+  res.jsonp(req.scores);
 }

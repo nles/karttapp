@@ -6,13 +6,11 @@ angular.module('karttapp.scoreboards')
   $stateProvider
   .state('scoreboard', {
     url: '/scoreboard',
-    templateUrl: 'public/scoreboards/views/scoreboard.html',
-    controller: 'ScoreboardController'
+    templateUrl: 'public/scoreboards/views/front.html'
   })
   .state('scoreboard by game',{
-  	url:'scoreboard/:gameId',
-  	templateUrl: 'public/scoreboards/views/scoreboard.html',
-    controller: 'ScoreboardController'
+  	url:'/scoreboard/:gameid',
+  	templateUrl: 'public/scoreboards/views/scoreboard.html'
   });
 
 }])

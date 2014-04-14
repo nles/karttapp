@@ -5,7 +5,6 @@ angular.module('karttapp.gamemodes').factory('GameMode', ['$rootScope', function
   var gameStarted = false;
   // tällä estetetään tilan vaihtaminen kesken pelin
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-    console.log(toState.name);
     if(gameStarted && toState.name != "scoreboard"){
       if(!confirm("Game progress will be discarded if you change the page now.")){
         event.preventDefault();

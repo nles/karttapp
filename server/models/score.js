@@ -69,19 +69,10 @@ ScoreSchema.post('save', function(doc){
 });
 
 ScoreSchema.statics.load = function(id,cb){
-  this.find({gameid: id}).exec(cb);
+  console.log('hä')
+  this.find({gameid: id}).sort([['points','descending']]).exec(cb);
 }
-/**
-* Methods
-*/
-ScoreSchema.methods = {
-  getId: function(game){
-    switch (game) {
-      case "pick_countries":
-          return 1;
-    }
-  }
-}
+
 
 
 mongoose.model('Score', ScoreSchema);
