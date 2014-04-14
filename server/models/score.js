@@ -69,7 +69,6 @@ ScoreSchema.post('save', function(doc){
 });
 
 ScoreSchema.statics.load = function(id,cb){
-  console.log('hä')
   this.find({gameid: id}).sort([['points','descending']]).exec(cb);
 }
 
