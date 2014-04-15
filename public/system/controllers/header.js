@@ -11,7 +11,7 @@ angular.module('karttapp.system')
       'link': 'home'
     },{
       'roles': ['anonymous','authenticated'],
-      'title': 'Hall-Of-Fame',
+      'title': 'HALL OF FAME',
       'link': 'scoreboard'
     },{
       'roles': ['authenticated'],

@@ -1,26 +1,17 @@
 <section data-ng-controller="ScoreboardController">
-
-
-<div class="row game-modes-wrapper">
-  <div class="jumbotron">
-    <h1>Welcome to the HALL OF FAME</h1>
-    <p>
-      Choose below the game.
-    </p>
-
-  </div>
-  <div class="col-md-6 link-wrapper">
-    <a data-ng-href="#!/scoreboard/{{connectID}}" class="game_mode_link">
-      <div class="header_over_img"><span>Connect</span></div>
-      <img class="img-thumbnail" src="public/system/assets/img/connect_pic.png" />
-    </a>
-  </div>
-  <div class="col-md-6 link-wrapper">
-    <a data-ng-href="#!/scoreboard/{{flaggerID}}" class="game_mode_link right">
-      <img class="img-thumbnail" src="public/system/assets/img/connect_pic.png" />
-      <div class="header_over_img"><span>Flagger</span></div>
-    </a>
+<div class="hall-of-fame">
+  <div class="row game-modes-wrapper">
+    <div class="jumbotron" style="text-align:center">
+      <h1>Welcome to the <br/>HALL OF FAME</h1>
+      <p>
+        Choose below the game.
+      </p>
+        <a class="btn hof-green btn-hof" data-ng-href="#!/scoreboard/{{connectID}}">Connect</a>
+        <a class="btn hof-blue btn-hof" data-ng-href="#!/scoreboard/{{flaggerID}}">Flagger</a>
+    </div>
   </div>
 </div>
+
+
 
 </section>
