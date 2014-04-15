@@ -9,10 +9,10 @@
 		  </div>
 		</div>
 		<hr />
-		<div class="jumbotron">
-			<h1 class="text-center">{{tableTitle}}<br><small>{{tableSubTitle}}</small></h1>
+		<div data-ng-show="scores.length" class="jumbotron">
+			<h1 class="text-center">{{tableTitle}}<br><small>{{gameName}}</small></h1>
 		</div>
-		<div class="btn-group">
+		<div data-ng-show="scores.length" class="btn-group">
 	    <a class="btn btn-success" data-ng-href="#!/scoreboard/{{connectID}}">Cars</a>
 	    <a class="btn btn-warning" data-ng-href="#!/scoreboard/{{connectID}}">Dogs</a>
 	    <a class="btn btn-success" data-ng-href="#!/scoreboard/{{connectID}}">Tech</a>
@@ -32,8 +32,10 @@
 	  		</tbody>
 	  	</table>
 	  <div class="no-score" data-ng-show="!scores.length">
-	    <h1>No scores yet! What a excellent chance to get your name in the hall-of-fame!</h1>
-	    <a ng-href="/#!/">PLAY</a>
+	    <span>No scores yet. What a excellent chance to get your name into the HALL OF FAME</span>
+	    <br/>
+	    <hr/>
+	    <a class="btn btn-primary" data-ng-href="/#!/game/{{gameName.toLowerCase()}}">PLAY NOW</a>
 	  </div>
 	</div>
 </section>

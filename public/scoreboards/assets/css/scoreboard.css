@@ -1,3 +1,11 @@
 .hall-of-fame{
 	max-width: 1080px;
 }
+.no-score{
+	width: 100%;
+	background: rgba(0,0,0,0.85);
+	color:white;
+	margin: 20px auto;
+	padding: 20px;
+	text-align: center;
+}

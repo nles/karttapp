@@ -8,7 +8,7 @@ angular.module('karttapp.scoreboards')
   $scope.flaggerID = 2;
   $scope.quantityOfScores = 10;
   $scope.tableTitle = "HALL OF FAME";
-  $scope.tableSubTitle = ($stateParams.gameid == $scope.connectID)?'Connect':'Flagger';
+  $scope.gameName = ($stateParams.gameid == $scope.connectID)?'Connect':'Flagger';
   $scope.orderProp = "points";
   $scope.gameid = $stateParams.gameid;
   $scope.limit = function(items){
