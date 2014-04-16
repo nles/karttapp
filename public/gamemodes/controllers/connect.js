@@ -43,7 +43,7 @@ angular.module('karttapp.gamemodes')
       // tallennus OK >> ohjaus scoreboard-sivulle..?
       //sulje popup.
       $scope.endGame();
-      $location.url('/scoreboard');
+      $location.url('/scoreboard/'+$rootScope.gameMode);
     })
     .error(function(data,status){
       console.log("error "+status+" with "+data);

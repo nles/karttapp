@@ -17,6 +17,10 @@ angular.module('karttapp.system')
       'roles': ['authenticated'],
       'title': 'Update data',
       'link': 'connect'
+    },{
+      'roles': ['anonymous','authenticated'],
+      'title': 'Create new question',
+      'link': 'question'
     }]
   }
 
