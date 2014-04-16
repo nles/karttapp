@@ -20,7 +20,7 @@ angular.module('karttapp.system')
     },{
       'roles': ['anonymous','authenticated'],
       'title': 'Create new question',
-      'link': 'question'
+      'link': 'questions'
     }]
   }
 
