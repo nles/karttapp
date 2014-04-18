@@ -1,4 +1,4 @@
-<section data-ng-controller="QuestionsController">
+<section data-ng-controller="QuestionsController" data-ng-init="setGroupid()">
 	<form class="form-inline" role="form" ng-submit="addQuestion()">
 	  <div class="form-group">
 	    <label for="answer">Country/Answer</label>
@@ -14,6 +14,11 @@
 
 	<table class="table table-striped">
 		<thead><tr><td>Question</td><td>Answer</td></tr></thead>
-		<tbody><tr ng-repeat="q in questions"><td>{{q.question}}</td><td>{{q.answer}}</td></tr></tbody>
+		<tbody><tr ng-repeat="q in questions"><td>{{q.question}}</td><td>{{q.answer.name}}</td></tr></tbody>
 	</table>
+	<form class="form-inline" role="form" ng-submit="saveQuestions()" data-ng-show="questions.length">
+		<input type="text" class="form-control" ng-model="group.name" placeholder="name for questiongroup"/>
+		<button type="submit" class="btn btn-success">SAVE</button>
+	</form>
+	
 </section>

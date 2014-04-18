@@ -3,7 +3,7 @@
 var questions = require('../controllers/questions');
 
 module.exports = function(app){
-	app.post('/saveQuestions', questions.create);
+	app.post('/saveQuestion', questions.create);
 	app.get('/game/connect/:qroupid', questions.show)
 	app.get('/questions', questions.all);
 	app.param('groupid', questions.questions);
