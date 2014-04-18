@@ -20,7 +20,9 @@ window.Connect = {
     // popup aloituksesta
     $("#start-popup .btn").click(function(){
       Connect.questionGroup = $(this).attr('data-group')
-      Connect.questions = Connect.scope.questions[Connect.questionGroup];
+      Connect.questions = Connect.scope.getQuestions(Connect.questionGroup);
+      
+      //Connect.questions = Connect.scope.questions[Connect.questionGroup];
       $("#start-popup .preloader").show();
       $("#start-popup .popup-content").hide();
       Map.setupMap(Connect.countryClick,function(){

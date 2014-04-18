@@ -14,11 +14,11 @@ var QuestionSchema = new Schema({
     type: Number,
     required: true
   },
-  question: {
+  name: {
     type: String,
     required: true
   },
-  answer: {
+  country: {
     type: String,
     required: true
   }
@@ -29,13 +29,13 @@ QuestionSchema.path('groupid').validate(function(groupid){
   return(typeof groupid === 'number' && groupid > 0);
 },'Groupid must be number');
 
-QuestionSchema.path('question').validate(function(question){
-  return (typeof question === 'string' && question.length > 0);
-}, 'There is something wrong with the question');
+QuestionSchema.path('name').validate(function(name){
+  return (typeof name === 'string' && name.length > 0);
+}, 'There is something wrong with the name');
 
-QuestionSchema.path('answer').validate(function(answer){
-  return(typeof answer === 'string' && answer.length > 0);
-}, 'There is something wrong with the answer');
+QuestionSchema.path('country').validate(function(country){
+  return(typeof country === 'string' && country.length > 0);
+}, 'There is something wrong with the country');
 
 
 QuestionSchema.statics.load = function(id,cb){

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('karttapp.gamemodes')
-.controller('ConnectController', ['$scope', '$rootScope', '$http', '$location', 'GameMode', function ($scope, $rootScope, $http, $location, GameMode) {
+.controller('ConnectController', ['$scope', '$rootScope', '$http', '$location', 'GameMode','Group', 'Question', function ($scope, $rootScope, $http, $location, GameMode, Group, Question) {
   $scope.score = {};
   // pelimoodin id tietokantaa varten
   $rootScope.gameMode = 1;
@@ -14,16 +14,22 @@ angular.module('karttapp.gamemodes')
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
   // kysymykset - haetaan ulkoisesta lähteestä:
   $scope.questions = {}
-  $http.get('/public/public/data/questions/cars.json').success(function(data) {
-    $scope.questions.cars = data.cars;
-  });
-  $http.get('/public/public/data/questions/breeds_of_dog.json').success(function(data) {
-    $scope.questions.breeds_of_dog = data.breeds_of_dog;
-  });
-  $http.get('/public/public/data/questions/tech_companies.json').success(function(data) {
-    $scope.questions.tech_companies = data.tech_companies;
-  });
 
+  $scope.getQuestions = function(groupid){
+   $scope.questions = Question.query({
+      groupid: groupid
+    }, function(questions){
+      return questions
+    })
+    return $scope.questions
+  }
+
+  $scope.groups = {}
+  $scope.getGroups = function(){
+    Group.query(function(groups){
+      $scope.groups = groups;
+    })
+  }
   // estetään tilan vaihtaminen kesken pelin
   $scope.gameStarted = GameMode.gameStarted();
   $scope.startGame = function(){ GameMode.startGame(); }
