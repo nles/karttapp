@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('karttapp.questions')
-.controller('QuestionsController', ['$scope', '$stateParams','$http', '$location', 'Global', 'Question', 'Group' , function ($scope, $stateParams, $http, $location, Global, Question, Group) {
+.controller('QuestionsController', ['$scope', '$stateParams','$http', '$location', 'Global', 'Countries', 'Group' , function ($scope, $stateParams, $http, $location, Global, Countries, Group) {
 	$scope.countries = []
 	$scope.groupid = null;
-	Question.success(function(data){
+	Countries.success(function(data){
 		$scope.countries = data
 	})
 	$scope.questions = []
@@ -19,8 +19,8 @@ angular.module('karttapp.questions')
 	}
 	$scope.addQuestion = function(){
 		var q = {}
-		q.answer = $scope.question.answer
-		q.question = $scope.question.question
+		q.country = $scope.question.country
+		q.name = $scope.question.name
 		$scope.questions.push(q)
 		console.log(q)
 		$scope.question = {}
@@ -37,8 +37,8 @@ angular.module('karttapp.questions')
 		for(var i = 0 ; i<this.questions.length ; i++){
 			$http.post('saveQuestion',{
 				groupid: this.groupid,
-				question: this.questions[i].question,
-				answer: this.questions[i].answer['alpha-3']
+				name: this.questions[i].name,
+				country: this.questions[i].country['alpha-3']
 			})
 		}
 		this.groupid = null;

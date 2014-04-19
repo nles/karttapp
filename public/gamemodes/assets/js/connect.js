@@ -17,21 +17,6 @@ window.Connect = {
       // ilmoitellaan scopellekin että nyt mennään
       this.scope.startGame();
     }
-    // popup aloituksesta
-    $("#start-popup .btn").click(function(){
-      Connect.questionGroup = $(this).attr('data-group')
-      Connect.questions = Connect.scope.questions[Connect.questionGroup];
-      $("#start-popup .preloader").show();
-      $("#start-popup .popup-content").hide();
-      Map.setupMap(Connect.countryClick,function(){
-        // muutama sekunti aikaa valmistautua ;D
-        setTimeout(function(){
-          $("#overlay-wrapper").show();
-          startGame(Connect);
-          $.magnificPopup.close();
-        },2000)
-      })
-    })
     // popup oikeasta vastauksesta
     $("#color-popup .accept-btn").click(function(){
       var selectedColor = $("#color-popup .pick-a-color").val()
@@ -105,6 +90,20 @@ window.Connect = {
         }
       }
     }
+  },
+  startGame: function(){
+    Connect.questionGroup = Connect.scope.groupid
+    Connect.questions = Connect.scope.questions;
+    $("#start-popup .preloader").show();
+    $("#start-popup .popup-content").hide();
+    Map.setupMap(Connect.countryClick,function(){
+      // muutama sekunti aikaa valmistautua ;D
+      setTimeout(function(){
+        $("#overlay-wrapper").show();
+        startGame(Connect);
+        $.magnificPopup.close();
+      },2000)
+    })
   },
   newRound: function(){
     if(Connect.questions.length > 0){

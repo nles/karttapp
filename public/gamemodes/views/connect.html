@@ -25,19 +25,19 @@
 <div id="select-popup" class="white-popup-block mfp-hide">
   <div id="list" class="list-group">
     <div class="btn list-group-item" ng-repeat="question in questions | orderBy:orderProp">
-      <span>{{question.name}}</span>
-      <input type="hidden" value="{{question.country}}" />
+      <span>{{question.question}}</span>
+      <input type="hidden" value="{{question.answer}}" />
     </div>
   </div>
 </div>
 
-<div id="start-popup" class="white-popup-block">
+<div id="start-popup" data-ng-init="getGroups()" class="white-popup-block">
   <div class="preloader" style="display:none">
     <img src="/public/gamemodes/assets/images/loader.gif" />
     <br /><br />
     Starting the game...
   </div>
-  <div class="popup-content">
+  <div class="popup-content" ng-show="groups.length">
     <h1>Connect a country and a thing</h1>
     <p>In this game, your goal is simply to connect a country and a thing.</p>
     <p>You get points from every correct answer. Each round gives a default of
@@ -45,10 +45,12 @@
     The multiplier is reset if you are too slow, answer incorrectly or skip a question. Good luck!</p>
     <h2>Select a question group</h2>
     <div id="question-group-list" class="btn-group-vertical">
-      <div class="btn btn-default" data-group='cars'>Car manufacturers</div>
-      <div class="btn btn-default" data-group='breeds_of_dog'>Breeds of dog</div>
-      <div class="btn btn-default" data-group='tech_companies'>Tech companies</div>
+      <div class="btn btn-default" data-group='{{g.id}}' ng-click="selectGroup(this.g.id)" ng-repeat="g in groups">{{g.name}}</div>
     </div>
+  </div>
+  <div ng-show="!groups.length">
+    <h1>No questiongroups yet</h1>
+    <p>Make one now <a ng-href="#!/questions">here</a></p>
   </div>
 </div>
 
