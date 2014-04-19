@@ -10,9 +10,12 @@
     <div id="flag-menu">
       <!-- Tähän lippuvalikko... Voisivat määräytyä satunaisesti -->
       <!-- Lipuista pitää myös pystyä klikkaamaan ja saada selkeä kuva siitä mikä lippu valittuna -->
-      <!-- kun vastattu oikein, lippu häviää tästä valikosta, ja korvautuu uudella? -->
-      <img src="/public/gamemodes/assets/images/flags/fin.png" />
-      <img src="/public/gamemodes/assets/images/flags/swe.png" />
+      <p class="info-text" data-swap="Now try to place the flags to correct countries.">Try to remember the country of all the flags visible now. You have 5 seconds!</p>
+      <ul>
+        <li ng-repeat="flag in flags">
+          <a href="#"><img ng-src="/public/gamemodes/assets/images/flags/{{flag.countryCode}}.png" /></a>
+        </li>
+      </ul>
     </div>
     <div id="points-and-multiply">
       <div>

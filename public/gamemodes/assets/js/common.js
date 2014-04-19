@@ -89,8 +89,11 @@ window.Map = {
     });
   },
   getActivePolygonCenter: function(){
+    return this.getPolygonCenter(this.activeCountryPolygon);
+  },
+  getPolygonCenter: function(polygon){
     var bounds = new google.maps.LatLngBounds();
-    var paths = this.activeCountryPolygon.getPaths();
+    var paths = polygon.getPaths();
     paths.forEach(function(path){
       var points = path.getLength()
       for(var i = 0; i < points; i++){
@@ -146,4 +149,16 @@ function addMessage(game,text,type){
     if($("#status .alert").length > 3) var tooManyMessages = true
     if(tooManyMessages) $("#status .alert:visible:first").fadeOut()
   },1000)
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+jQuery.fn.getCenter = function () {
+  var center = new Object();
+  var pos = $(this).offset();
+  center.x = ((pos.left + $(this).outerWidth()) / 2);
+  center.y = ((pos.top + $(this).outerHeight()) / 2);
+  return center;
 }

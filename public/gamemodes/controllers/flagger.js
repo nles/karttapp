@@ -12,6 +12,8 @@ angular.module('karttapp.gamemodes')
   // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
   $scope.multiplier = 0;
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
+  //
+  $scope.flags = new Array();
 
   // estetään tilan vaihtaminen kesken pelin
   $scope.gameStarted = GameMode.gameStarted();
