@@ -34,9 +34,12 @@ angular.module('karttapp.gamemodes')
   $scope.gameStarted = GameMode.gameStarted();
   $scope.startGame = function(){ GameMode.startGame(); }
   $scope.endGame = function(){ GameMode.endGame(); }
-
-  // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
-  window.Connect.init();
+  $scope.groupid = 0;
+  $scope.selectGroup = function(groupid){
+    $scope.groupid = groupid;
+    $scope.getQuestions(groupid);
+    window.Connect.startGame();
+  }
 
   $scope.submitScore = function(){
     $.magnificPopup.close();
@@ -56,5 +59,8 @@ angular.module('karttapp.gamemodes')
     });
 
   };
+
+  // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
+  window.Connect.init();
 
 }]);
