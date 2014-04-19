@@ -5,11 +5,12 @@ angular.module('karttapp.gamemodes').factory('GameMode', ['$rootScope', function
   var gameStarted = false;
   // tällä estetetään tilan vaihtaminen kesken pelin
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-    if(gameStarted && toState.name != "scoreboard"){
+    if(gameStarted){
       if(!confirm("Game progress will be discarded if you change the page now.")){
         event.preventDefault();
       } else {
         gameStarted = false;
+        clearTimer();
       }
     }
   })
@@ -19,6 +20,7 @@ angular.module('karttapp.gamemodes').factory('GameMode', ['$rootScope', function
     },
     endGame: function(){
       gameStarted = false;
+      clearTimer();
     },
     gameStarted: function(){
       return gameStarted;
