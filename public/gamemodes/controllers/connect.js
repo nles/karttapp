@@ -12,6 +12,9 @@ angular.module('karttapp.gamemodes')
   // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
   $scope.multiplier = 0;
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
+  
+  $scope.orderProp = '-likes'
+
   // kysymykset - haetaan ulkoisesta lähteestä:
   $scope.questions = {}
 
@@ -40,13 +43,43 @@ angular.module('karttapp.gamemodes')
     $scope.getQuestions(groupid);
     window.Connect.startGame();
   }
+  $scope.voted = false
+  $scope.like = function(like){
+    $scope.voted = true
+    var g = $scope.findGroup()
+    if(like){
+      g.likes++;
+    }else{
+      g.likes--;
+    }
+    $http.post('updateGroup',{
+      id: g.id,
+      name: g.name,
+      likes: g.likes,
+      _id: g._id,
+      __v: g.__v
+    }).success(function(){
+
+    }).error(function(data,status){
+      console.log("error " + status + "with" +data)
+    });
+  }
+
+  $scope.findGroup = function(){
+    for(var i = 0 ;i<$scope.groups.length ; i++){
+      if($scope.groups[i].id == $scope.groupid){
+        return $scope.groups[i]
+      }
+    }
+  }
 
   $scope.submitScore = function(){
     $.magnificPopup.close();
     $http.post('/saveScore', {
       player: $scope.score.player,
       gameid: $scope.score.gameid,
-      points: $scope.score.points
+      points: $scope.score.points,
+      groupid: $scope.groupid
     })
     .success(function(){
       // tallennus OK >> ohjaus scoreboard-sivulle..?

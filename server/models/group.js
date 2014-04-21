@@ -35,7 +35,7 @@ GroupSchema.path('name').validate(function(name){
 
 
 GroupSchema.statics.load = function(id,cb){
-  this.find({groupid: id}).exec(cb);
+  this.find({id: id}).exec(cb);
 }
 
 

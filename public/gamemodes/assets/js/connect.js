@@ -52,7 +52,7 @@ window.Connect = {
         if(cc == Connect.correctAnswer){
           addMessage(Connect,"You answered <strong>"+answerCountry+"</strong> correctly!","success");
           Connect.scope.$apply(function(){
-            Connect.scope.points += 100*(1+Connect.scope.multiplier)*(100-Math.round(progressBar.width()/progressBarWrapper.width()*100));
+            Connect.scope.points += 37*(1+Connect.scope.multiplier)*(100-Math.round(progressBar.width()/progressBarWrapper.width()*100));
             Connect.scope.multiplier += 1;
           })
           clearTimer();

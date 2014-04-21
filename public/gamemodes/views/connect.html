@@ -45,7 +45,7 @@
     The multiplier is reset if you are too slow, answer incorrectly or skip a question. Good luck!</p>
     <h2>Select a question group</h2>
     <div id="question-group-list" class="btn-group-vertical">
-      <div class="btn btn-default" data-group='{{g.id}}' ng-click="selectGroup(this.g.id)" ng-repeat="g in groups">{{g.name}}</div>
+      <div class="btn btn-default" data-group='{{g.id}}' ng-click="selectGroup(this.g.id)" ng-repeat="g in groups |orderBy:orderProp:reverse">{{g.name}}</div>
     </div>
   </div>
   <div ng-show="!groups.length">
@@ -67,6 +67,19 @@
 
 <div id="savescore-popup" class="white-popup-block mfp-hide">
   <h1>Get your name in the hall-of-fame!</h1>
+  <div ng-show="!voted">
+    <p>Did you liked this question group? Vote:</p>
+    <button class="btn btn-primary" ng-click="like(true)">
+      <span class="glyphicon glyphicon-thumbs-up"></span>
+    </button>
+    <button class="btn btn-primary" ng-click="like(false)">
+      <span class="glyphicon glyphicon-thumbs-down"></span>
+    </button>
+  </div>
+  <div ng-show="voted">
+    <p ng-show="voted">Thank you for voting</p>
+  </div>
+  
   <form ng-submit="submitScore()" class="form-horizontal">
       <input  type="hidden"  value="1" ng-model="score.gameid"/>
       <div class="form-group">

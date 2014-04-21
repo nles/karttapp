@@ -4,7 +4,8 @@
 * Module dependencies
 */
 var mongoose = require('mongoose'),
-		Group = mongoose.model('Group');
+		Group = mongoose.model('Group'),
+    _ = require('lodash');
 
 /**
 * Find questions by groupid
@@ -18,6 +19,15 @@ exports.group = function(req, res, next, groupid) {
   });
 };
 
+exports.update = function(req,res){
+  Group.update(
+    {id: req.body.id},
+    { $set: {likes: req.body.likes}},
+    function(err,result){
+      console.log(result)
+    }
+  );
+}
 /**
 * Create a group
 */

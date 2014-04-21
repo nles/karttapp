@@ -12,17 +12,25 @@
 		<div data-ng-show="scores.length" class="jumbotron">
 			<h1 class="text-center">{{tableTitle}}<br><small>{{gameName}}</small></h1>
 		</div>
+	<!--VAIN CONNECT -->
+		<div class="btn-group" data-ng-show="gameid == 1">
+			<button class="btn btn-primary" ng-click="resetGroup()">All</button>
+			<button ng-repeat="group in groups" class="btn btn-primary" ng-click="switchGroup()">{{group.name}}</button>
+		</div> 
+	<!-- END VAIN CONNECT -->
 	  	<table data-ng-show="scores.length" class="table table-striped table-hover">
 	  		<thead>
 	  			<tr>
-	  				<th>#</th><th>Player</th><th>Points</th>
+	  				<th>#</th><th>Player</th><th>Points</th><th>Group</th>
 	  			</tr>
 	  		</thead>
 	  		<tbody>
-	  			<tr ng-repeat="score in scores | limitTo:quantityOfScores">
+	  			<tr ng-repeat="score in scores |filter:filterByGroup() | limitTo:quantityOfScores">
 	  				<th>{{$index+1}}</th>
 	  				<th>{{score.player}}</th>
 	  				<th>{{score.points}}</th>
+	  				<th data-ng-show="gameid == 1">{{nameOfGroup(score.groupid)}}</th>
+	  				<th data-ng-show="gameid == 2"><!-- TÄHÄN TASON HAKU --><th>
 	  			</tr>
 	  		</tbody>
 	  	</table>
