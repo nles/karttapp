@@ -21,6 +21,10 @@ var ScoreSchema = new Schema({
   points: {
     type: Number,
     required: true
+  },
+  groupid: {
+    type: Number,
+    default: 0 // 0 == kyseisellä pelimoodilla ei ole eri kysymyskategorioita
   }
 });
 

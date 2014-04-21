@@ -4,6 +4,7 @@ angular.module('karttapp.gamemodes')
 .controller('FlaggerController', ['$scope', '$rootScope', '$http', '$location', 'GameMode', function ($scope, $rootScope, $http, $location, GameMode) {
   $scope.score = {};
   // pelimoodin id tietokantaa varten
+  //connect-pelin kysymysten lisäysmahdollisuuden vuoksi id:n oltava suuri
   $rootScope.gameMode = 2;
   // pelimoodin nimi
   $scope.pageHeader = "Flagger";
