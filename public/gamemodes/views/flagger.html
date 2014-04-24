@@ -52,7 +52,7 @@
     <p>Start by clicking a flag on the flag menu, and then click a country on the map to connect it.</p>
     <p>You get points from ...</p>
     <div id="question-group-list" class="btn-group-vertical">
-      <div class="btn btn-default" data-group='cars'>Start the game</div>
+      <div class="btn btn-{{+ levelEffect[group.id]}}" ng-repeat="group in groups" data-group='{{group.id}}' ng-click="setGroupid(this.group.id)">{{group.name}}</div>
     </div>
   </div>
 </div>

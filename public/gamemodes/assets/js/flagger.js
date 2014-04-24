@@ -11,19 +11,17 @@ window.Flagger = {
       // ilmoitellaan scopellekin että nyt mennään
       this.scope.startGame();
     }
-    // popup aloituksesta
-    $("#start-popup .btn").click(function(){
-      $("#start-popup .preloader").show();
-      $("#start-popup .popup-content").hide();
-      Map.setupMap(Flagger.countryClick,function(){
-        setTimeout(function(){
-          $("#overlay-wrapper").show();
-          startGame(Flagger);
-          $.magnificPopup.close();
-        },2)
-      })
+  },
+  startGame: function(){
+    $("#start-popup .preloader").show();
+    $("#start-popup .popup-content").hide();
+    Map.setupMap(Flagger.countryClick,function(){
+      setTimeout(function(){
+        $("#overlay-wrapper").show();
+        startGame(Flagger);
+        $.magnificPopup.close();
+      },2)
     })
-    $("#start-popup .btn").trigger("click");
   },
   skipQuestion: function(){
 
