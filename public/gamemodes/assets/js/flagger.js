@@ -2,6 +2,7 @@ window.Flagger = {
   scope: null,
   flags: [],
   guesses: [],
+  selectedFlagCC: null,
   init: function(){
     // tässä vaiheessa angular on jo luonut scopen,
     // joten otetaan se käyttöön
@@ -15,7 +16,7 @@ window.Flagger = {
   startGame: function(){
     $("#start-popup .preloader").show();
     $("#start-popup .popup-content").hide();
-    Map.setupMap(Flagger.countryClick,function(){
+    Map.setupMap(Flagger,function(){
       setTimeout(function(){
         $("#overlay-wrapper").show();
         startGame(Flagger);
@@ -54,6 +55,10 @@ window.Flagger = {
         Map.drawOverlay(center.lat(),center.lng(),flag,"fff");
         Flagger.scope.flags.push({countryCode:cc})
       }
+      setTimeout(function(){
+        Map.map.map.setCenter(new google.maps.LatLng(47.04780089030736, 16.15828997192377))
+        Map.map.map.setZoom(4);
+      },200);
     }
 
     window.setTimeout(function(){
@@ -81,6 +86,10 @@ window.Flagger = {
     // answers =
   },
   countryClick: function(e,d){
+    if(!Flagger.selectedFlagCC){
+      addMessage(Flagger,"Start by selecting a flag from the flag menu","info",true);
+      return
+    }
     polygon = this;
     answer = "FIN"
     var cc = polygon.get("COUNTRYCODE")
@@ -92,13 +101,53 @@ window.Flagger = {
         window.setTimeout(function(){ Map.allowClick = true },1000);
         Map.guessedCountries.push(cc)
         Map.activeCountryPolygon = polygon;
-        if(cc == answer){
+        answerCountry = Map.getCountryNameByCode(cc);
+        if(cc == Flagger.selectedFlagCC){
           // toimet jos vastaus on oikein
-          answerCountry = Map.getCountryNameByCode(cc);
           // maalataan vastaus keskelle maata
+          var flagOnMenu = $("#flag-menu a.selected");
           center = Map.getActivePolygonCenter();
-          flag = "<img src='/public/gamemodes/assets/images/flags/fin.png' />"
-          Map.drawOverlay(center.lat(),center.lng(),flag,"fff")
+          flag = "<img src='/public/gamemodes/assets/images/flags/"+cc.toLowerCase()+".png' />"
+          var overlay = Map.drawOverlay(center.lat(),center.lng(),flag,"fff","flagJustAdded",true)
+          addMessage(Flagger,"You answered <strong>"+answerCountry+"</strong> correctly!","success");
+          // poistetaan maalaukset
+          $.each(Map.guessedPolygons,function(i,e){
+            e.setOptions({"fillOpacity":0,"strokeWeight":0})
+          })
+          // lennätä kartta kohdilleen
+          var flyToPlace = function(){
+            var flyingMap = flagOnMenu.clone()
+            $('body').append(flyingMap)
+            var addedFlag = $("#flagJustAdded")
+            var posOnMenu= flagOnMenu.offset();
+            var posOnMap = addedFlag.offset();
+            addedFlag.show();
+            addedFlagOffset = addedFlag.offset();
+            flyingMap
+            .css("position","fixed")
+            .css("z-index",1000)
+            .css("left",posOnMenu.left+2)
+            .css("top",posOnMenu.top+2)
+            var flyToTop = addedFlagOffset.top-(addedFlag.height()/2)
+            var flyToLeft = addedFlagOffset.left-(addedFlag.width()/2)
+            //
+            addedFlag.hide().removeAttr("id");
+            flyingMap.animate({"top":flyToTop,"left":flyToLeft},500,function(){
+              addedFlag.show();
+              overlay.draw();
+              flyingMap.hide();
+            })
+          }
+          // suoritetaan asetettu kun overlay on paikoillaan...
+          setTimeout(function(){ flyToPlace(); removeFromMenu(); },100)
+          // poista flag-menusta
+          var removeFromMenu = function(){
+            Flagger.scope.$apply(function(){
+              $.each(Flagger.scope.flags,function(i,e){
+                if(e && cc === e.countryCode.toUpperCase()) Flagger.scope.flags.splice(i,1)
+              })
+            })
+          }
         } else {
           // toimet jos vastaus on väärin
           Map.guessedPolygons.push(polygon)
@@ -108,9 +157,19 @@ window.Flagger = {
             "strokeWeight":1
           })
           // näytetään viesti
-          // addMessage("You guessed <strong>"+getCountryNameByCode(cc)+"</strong>, but that was incorrect","danger");
+          addMessage(Flagger,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger");
         }
       }
     }
+  },
+  setSelectedFlag: function(element){
+    $("#flag-menu ul li a").removeClass("selected");
+    e = $(element)
+    e.addClass("selected")
+    this.selectedFlagCC = e.attr("data-cc").toUpperCase();
+    // värit takaisin
+    $.each(Map.guessedPolygons,function(i,e){
+      e.setOptions({"fillOpacity":0,"strokeWeight":0})
+    })
   }
 }

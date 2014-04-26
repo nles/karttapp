@@ -6,7 +6,7 @@ window.Map = {
   guessedPolygons: [],
   activeCountryPolygon: null,
   countryData: {},
-  setupMap: function(countryClickAction,callback){
+  setupMap: function(game,callback){
     //Kartan luonti, lat&lng+zoom kohdilleen, jotta näkymä oikein
     //Kartan zoomauksen ja siirtämisen esto?
     var mapStyle = [
@@ -69,15 +69,16 @@ window.Map = {
       for(i in data.features){
         var country = data.features[i]
         var type = country.geometry.type
-        countryPolygon = Map.map.drawPolygon({
+        polygonOptions = {
           paths: country.geometry.coordinates,
           useGeoJSON: true,
           strokeOpacity: 1,
           strokeWeight: 0,
           fillColor: "#CD5C5C",
           fillOpacity: 0,
-          click: countryClickAction
-        })
+        }
+        if(game.countryClick) polygonOptions.click = game.countryClick
+        countryPolygon = Map.map.drawPolygon(polygonOptions)
         countryPolygon.set("COUNTRYCODE",country.id);
         Map.allPolygons.push(countryPolygon)
       }
@@ -106,11 +107,13 @@ window.Map = {
   movePolygon: function(x,y){
     this.activeCountryPolygon.moveTo(new google.maps.LatLng(center.lat()+y, center.lng()+x))
   },
-  drawOverlay: function(lat,lng,text,color){
-    this.map.drawOverlay({
+  drawOverlay: function(lat,lng,text,color,id,keepHidden){
+    if(id) id = 'id="'+id+'" '; else id = "";
+    if(keepHidden) hide = ';display:none;'; else hide = "";
+    return this.map.drawOverlay({
       lat: lat,
       lng: lng,
-      content: '<div class="overlay" style="border-color:#'+color+'">'+text+'</div>'
+      content: '<div '+id+'class="overlay" style="border-color:#'+color+hide+'">'+text+'</div>'
     });
   },
   getCountryNameByCode: function(code){
@@ -140,15 +143,31 @@ function clearTimer(){
   progressBar.width(0);
 }
 
-function addMessage(game,text,type){
+function addMessage(game,text,type,flash){
   $("#status").show()
-  game.scope.$apply(function(){
-    game.scope.roundMessages.push({text: text, type: type});
-  })
-  window.setTimeout(function(){
-    if($("#status .alert").length > 3) var tooManyMessages = true
-    if(tooManyMessages) $("#status .alert:visible:first").fadeOut()
-  },1000)
+  duplicateMessage = false;
+  $.each(game.scope.roundMessages,function(i,e){
+    if(e.text === text) duplicateMessage = true;
+  });
+  if(!duplicateMessage){
+    game.scope.$apply(function(){
+      game.scope.roundMessages.unshift({text: text, type: type});
+    });
+    window.setTimeout(function(){
+      if($("#status .alert").length > 3) var tooManyMessages = true;
+      if(tooManyMessages) $("#status .alert:visible:last").fadeOut(function(){ removeMessage($(this).text()); });
+      if(flash){
+        $("#status .alert:first").fadeOut(function(){ removeMessage($(this).text()); });
+      }
+    },1000);
+  }
+  var removeMessage = function(text){
+    $.each(game.scope.roundMessages,function(i,e){
+      if(e.text === text) game.scope.roundMessages.splice(i,1)
+    });
+    console.log($("#status .alert:visible").length)
+    if($("#status .alert:visible").length == 0) $("#status").hide()
+  }
 }
 
 function getRandomInt(min, max) {

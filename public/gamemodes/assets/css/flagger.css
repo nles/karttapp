@@ -8,7 +8,14 @@
 #flag-menu li {
   float: left;
   display: none;
-  margin: 4px 4px 4px 4px;
+  margin: 1px;
+}
+#flag-menu li a {
+  display: block;
+  border: #eee solid 3px;
+}
+#flag-menu li a.selected {
+  border-color: #008000;
 }
 #gmaps .overlay:hover { opacity: 0.2; }
 .overlay-copy { position: fixed; z-index: 9999999; }

@@ -13,7 +13,7 @@
       <p class="info-text" data-swap="Now try to place the flags to correct countries.">Try to remember the country of all the flags visible now. You have 5 seconds!</p>
       <ul>
         <li ng-repeat="flag in flags">
-          <a href="#"><img ng-src="/public/gamemodes/assets/images/flags/{{flag.countryCode}}.png" /></a>
+          <a data-cc="{{flag.countryCode}}" href="javascript:void(0)" onclick="Flagger.setSelectedFlag(this)"><img ng-src="/public/gamemodes/assets/images/flags/{{flag.countryCode}}.png" /></a>
         </li>
       </ul>
     </div>

@@ -96,7 +96,7 @@ window.Connect = {
     Connect.questions = Connect.scope.questions;
     $("#start-popup .preloader").show();
     $("#start-popup .popup-content").hide();
-    Map.setupMap(Connect.countryClick,function(){
+    Map.setupMap(Connect,function(){
       // muutama sekunti aikaa valmistautua ;D
       setTimeout(function(){
         $("#overlay-wrapper").show();
