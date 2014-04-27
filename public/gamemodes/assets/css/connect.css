@@ -8,3 +8,12 @@
 #color-popup #actions {
   float: right;
 }
+.TLA-wrapper {
+  text-align: center;
+}
+input#TLA {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 28px;
+  width: 100px;
+}

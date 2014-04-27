@@ -7,6 +7,7 @@ window.Flagger = {
     // tässä vaiheessa angular on jo luonut scopen,
     // joten otetaan se käyttöön
     this.scope = angular.element($("#ng-view")).scope();
+    this.scope.flags = new Array();
     if(!this.scope.gameStarted){
       Connect.generatePopup('start-popup');
       // ilmoitellaan scopellekin että nyt mennään
@@ -21,7 +22,7 @@ window.Flagger = {
         $("#overlay-wrapper").show();
         startGame(Flagger);
         $.magnificPopup.close();
-      },2)
+      },200)
     })
   },
   skipQuestion: function(){
@@ -49,7 +50,7 @@ window.Flagger = {
     for(var i in Map.allPolygons){
       var polygon = Map.allPolygons[i];
       var cc = polygon.get("COUNTRYCODE").toLowerCase()
-      if($.inArray(polygon.get("COUNTRYCODE"),countries) > -1){
+      if($.inArray(polygon.get("COUNTRYCODE"), countries) != -1){
         center = Map.getPolygonCenter(polygon);
         flag = "<img src='/public/gamemodes/assets/images/flags/"+cc+".png' />"
         Map.drawOverlay(center.lat(),center.lng(),flag,"fff");
@@ -60,30 +61,43 @@ window.Flagger = {
         Map.map.map.setZoom(4);
       },200);
     }
-
-    window.setTimeout(function(){
-      copies = $('<div id="ocs">')
-      $("#gmaps .overlay").each(function(i,e){
-        pos = $(e).offset();
-        copy = $("<div class='overlay overlay-copy'>"+e.innerHTML+"</div>")
-        copy.css("top",pos.top).css("left",pos.left)
-        copies.append(copy);
-      })
-      $('body').append(copies);
-      var flagMenuCenter = $("#flag-menu").getCenter()
-      $("#gmaps .overlay").hide();
-      $("#ocs .overlay-copy").animate({"left":flagMenuCenter.x,"top":flagMenuCenter.y+50,"opacity":0},500)
-      var showFlag = function(){
-        $("#flag-menu li:hidden:first").fadeIn(100,showFlag);
+    var startTimer = window.setInterval(function(){
+      var progressBarWidth = progressBar.width();
+      progressBar.width(progressBarWidth + 20);
+      if(progressBarWidth >= progressBarWrapperWidth){
+        window.clearTimeout(startTimer);
+        Flagger.hideFlagsFromMap();
       }
-      showFlag();
-      var it = $("#flag-menu .info-text")
-      var _itT = it.text();
-      it.text(it.attr("data-swap")).attr("data.swap",_itT);
-    },5000);
-
-    // jatkoa seuraa ...
-    // answers =
+    },500)
+  },
+  hideFlagsFromMap: function(){
+    copies = $('<div id="ocs">');
+    $("#gmaps .overlay").each(function(i,e){
+      pos = $(e).offset();
+      copy = $("<div class='overlay overlay-copy'>"+e.innerHTML+"</div>")
+      copy.css("top",pos.top).css("left",pos.left)
+      copies.append(copy);
+    })
+    $('body').append(copies);
+    var flagMenuCenter = $("#flag-menu").getCenter()
+    $("#gmaps .overlay").hide();
+    $("#ocs .overlay-copy").animate({"left":flagMenuCenter.x,"top":flagMenuCenter.y+50,"opacity":0},500)
+    var showFlag = function(){
+      $("#flag-menu li:hidden:first").fadeIn(100,showFlag);
+    }
+    showFlag();
+    var it = $("#flag-menu .info-text")
+    var _itT = it.text();
+    it.text(it.attr("data-swap")).attr("data.swap",_itT);
+  },
+  giveHint: function(){
+    Map.map.map.setCenter(new google.maps.LatLng(47.04780089030736, 16.15828997192377))
+    Map.map.map.setZoom(1);
+    $("#gmaps .overlay:not(.guessed)").fadeIn(function(){
+      setTimeout(function(){
+        $("#gmaps .overlay:not(.guessed)").fadeOut();
+      },1000)
+    });
   },
   countryClick: function(e,d){
     if(!Flagger.selectedFlagCC){
@@ -108,7 +122,7 @@ window.Flagger = {
           var flagOnMenu = $("#flag-menu a.selected");
           center = Map.getActivePolygonCenter();
           flag = "<img src='/public/gamemodes/assets/images/flags/"+cc.toLowerCase()+".png' />"
-          var overlay = Map.drawOverlay(center.lat(),center.lng(),flag,"fff","flagJustAdded",true)
+          var overlay = Map.drawOverlay(center.lat(),center.lng(),flag,"fff","flagJustAdded","guessed",true)
           addMessage(Flagger,"You answered <strong>"+answerCountry+"</strong> correctly!","success");
           // poistetaan maalaukset
           $.each(Map.guessedPolygons,function(i,e){

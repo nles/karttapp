@@ -12,7 +12,7 @@ angular.module('karttapp.gamemodes')
   // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
   $scope.multiplier = 0;
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
-  
+
   $scope.orderProp = '-likes'
 
   // kysymykset - haetaan ulkoisesta lähteestä:
@@ -46,27 +46,38 @@ angular.module('karttapp.gamemodes')
   $scope.voted = false
   $scope.like = function(like){
     $scope.voted = true
-    var g = $scope.findGroup()
-    if(like){
-      g.likes++;
-    }else{
-      g.likes--;
+    var continueToHOF = function(){
+      setTimeout(function(){
+        $scope.submitScore()
+      },500)
     }
-    $http.post('updateGroup',{
-      id: g.id,
-      name: g.name,
-      likes: g.likes,
-      _id: g._id,
-      __v: g.__v
-    }).success(function(){
-
-    }).error(function(data,status){
-      console.log("error " + status + "with" +data)
-    });
+    var g = $scope.findGroup()
+    if(g){
+      if(like){
+        g.likes++;
+      } else{
+        g.likes--;
+      }
+      $http.post('updateGroup',{
+        id: g.id,
+        name: g.name,
+        likes: g.likes,
+        _id: g._id,
+        __v: g.__v
+      }).success(function(){
+      }).error(function(data,status){
+        console.log("error " + status + "with" +data)
+      });
+      continueToHOF();
+    } else {
+      // virhe, mutta mennään kuitenkin
+      console.log("err")
+      continueToHOF();
+    }
   }
 
   $scope.findGroup = function(){
-    for(var i = 0 ;i<$scope.groups.length ; i++){
+    for(var i = 0; i < $scope.groups.length; i++){
       if($scope.groups[i].id == $scope.groupid){
         return $scope.groups[i]
       }
@@ -76,24 +87,23 @@ angular.module('karttapp.gamemodes')
   $scope.submitScore = function(){
     $.magnificPopup.close();
     $http.post('/saveScore', {
-      player: $scope.score.player,
+      player: $scope.score.player.toUpperCase(),
       gameid: $scope.score.gameid,
       points: $scope.score.points,
       groupid: $scope.groupid
     })
     .success(function(){
-      // tallennus OK >> ohjaus scoreboard-sivulle..?
-      //sulje popup.
       $scope.endGame();
       $location.url('/scoreboard/'+$rootScope.gameMode);
     })
     .error(function(data,status){
       console.log("error "+status+" with "+data);
+      $location.url('/scoreboard/'+$rootScope.gameMode);
     });
 
   };
 
-  // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
+  // ajetaan pelimoodin koodi (view ladattu)
   window.Connect.init();
 
 }]);

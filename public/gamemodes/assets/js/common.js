@@ -66,6 +66,7 @@ window.Map = {
     this.map.map.mapTypes.set('mapstyle', new google.maps.StyledMapType(mapStyle,{name:"mapstyle"}))
     //Layeri jokaiselle maalle
     $.getJSON("public/public/data/countries/countries.geo.json",function(data){
+      Map.allPolygons = new Array();
       for(i in data.features){
         var country = data.features[i]
         var type = country.geometry.type
@@ -107,13 +108,14 @@ window.Map = {
   movePolygon: function(x,y){
     this.activeCountryPolygon.moveTo(new google.maps.LatLng(center.lat()+y, center.lng()+x))
   },
-  drawOverlay: function(lat,lng,text,color,id,keepHidden){
+  drawOverlay: function(lat,lng,text,color,id,extraClasses,keepHidden){
     if(id) id = 'id="'+id+'" '; else id = "";
     if(keepHidden) hide = ';display:none;'; else hide = "";
+    if(extraClasses) extraClasses = " "+extraClasses; else extraClasses = "";
     return this.map.drawOverlay({
       lat: lat,
       lng: lng,
-      content: '<div '+id+'class="overlay" style="border-color:#'+color+hide+'">'+text+'</div>'
+      content: '<div '+id+'class="overlay'+extraClasses+'" style="border-color:#'+color+hide+'">'+text+'</div>'
     });
   },
   getCountryNameByCode: function(code){
