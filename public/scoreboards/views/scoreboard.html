@@ -12,12 +12,13 @@
 		<div data-ng-show="scores.length" class="jumbotron">
 			<h1 class="text-center">{{tableTitle}}<br><small>{{gameName}}</small></h1>
 		</div>
-	<!--VAIN CONNECT -->
-		<div class="btn-group" data-ng-show="gameid == 1">
+
+		<div class="btn-group" ng-show="scores.length">
 			<button class="btn btn-primary" ng-click="resetGroup()">All</button>
 			<button ng-repeat="group in groups" class="btn btn-primary" ng-click="switchGroup()">{{group.name}}</button>
 		</div> 
-	<!-- END VAIN CONNECT -->
+
+
 	  	<table data-ng-show="scores.length" class="table table-striped table-hover">
 	  		<thead>
 	  			<tr>
@@ -25,12 +26,12 @@
 	  			</tr>
 	  		</thead>
 	  		<tbody>
-	  			<tr ng-repeat="score in scores |filter:filterByGroup() | limitTo:quantityOfScores">
+	  			<tr ng-repeat="score in scores |filter:filter() | limitTo:quantityOfScores">
 	  				<th>{{$index+1}}</th>
 	  				<th>{{score.player}}</th>
 	  				<th>{{score.points}}</th>
 	  				<th data-ng-show="gameid == 1">{{nameOfGroup(score.groupid)}}</th>
-	  				<th data-ng-show="gameid == 2"><!-- TÄHÄN TASON HAKU --><th>
+	  				<th data-ng-show="gameid == 2">{{nameOfLevel(score.groupid)}}<th>
 	  			</tr>
 	  		</tbody>
 	  	</table>
@@ -39,6 +40,11 @@
 	    <br/>
 	    <hr/>
 	    <a class="btn btn-primary" data-ng-href="/#!/game/{{gameName.toLowerCase()}}">PLAY NOW</a>
+	  </div>
+	  <div class="no-score" data-ng-show="scores.length">
+	  	<span>Can you beat that score?</span>
+	  	<br /><hr>
+	  	<a class="btn btn-info" data-ng-href="/#!/game/{{gameName.toLowerCase()}}">TRY NOW</a>
 	  </div>
 	</div>
 </section>

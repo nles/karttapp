@@ -6,22 +6,47 @@ angular.module('karttapp.scoreboards')
   $scope.global = Global;
   $scope.connectID = 1;
   $scope.flaggerID = 2;
-  $scope.groupid = 0;
   $scope.quantityOfScores = 10;
   $scope.tableTitle = "HALL OF FAME";
   $scope.gameName = ($stateParams.gameid == $scope.connectID)?'Connect':'Flagger';
   $scope.orderProp = "points";
   $scope.gameid = $stateParams.gameid;
+  $scope.groups = [
+    {
+      name: 'Easy',
+      id: 1
+    },
+    {
+      name: 'Moderate',
+      id: 2
+    },
+    {
+      name: 'Hard',
+      id: 3
+    }
+    
+  ]
   $scope.limit = function(items){
   	return items.slice(0,10)
   }
-  $scope.filterByGroup = function(){
+  $scope.filter = function(){
     return function(item){
-      if($scope.groupid == 0){
-        return true
+      if($scope.groupid){
+        if($scope.groupid == 0){
+          return true
+        }else{
+          return item.groupid == $scope.groupid
+        }
+      }else if($scope.levelid){
+        if($scope.levelid == 0){
+          return true
+        }else{
+          return item.groupid == $scope.levelid
+        }
       }else{
-        return item.groupid == $scope.groupid
+        return true
       }
+      
     }
   }
   $scope.nameOfGroup = function(groupid){
@@ -29,6 +54,18 @@ angular.module('karttapp.scoreboards')
       if($scope.groups[i].id == groupid){
         return $scope.groups[i].name
       }
+    }
+  }
+  $scope.nameOfLevel = function(id){
+    switch(id){
+      case 1:
+        return "Easy";
+      case 2:
+        return "Moderate";
+      case 3:
+        return "Hard";
+      default:
+        return "Unknown";
     }
   }
   $scope.findScores = function(){
@@ -41,7 +78,6 @@ angular.module('karttapp.scoreboards')
       $scope.getGroups()  
     }
   }
-  $scope.groups = {}
   $scope.getGroups = function(){
     Group.query(function(groups){
       $scope.groups = groups;
@@ -50,6 +86,11 @@ angular.module('karttapp.scoreboards')
   $scope.switchGroup = function(){
     if($(this)[0].group.id){
       $scope.groupid = $(this)[0].group.id;
+    }
+  }
+  $scope.switchLevel = function(){
+    if($(this)[0].level.id){
+      $scope.groupid = $(this)[0].level.id;
     }
   }
   $scope.resetGroup = function(){

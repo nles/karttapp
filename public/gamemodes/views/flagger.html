@@ -69,25 +69,17 @@
 </div>
 
 <div id="savescore-popup" class="white-popup-block mfp-hide">
-  <h1>Get your name in the hall-of-fame!</h1>
-  <form ng-submit="submitScore()" class="form-horizontal">
-      <input  type="hidden"  value="1" ng-model="score.gameid"/>
-      <div class="form-group">
-          <label for="player" class="col-md-4 control-label">Name</label>
-          <div class="col-md-8">
-              <input type="text"  placeholder="HI!" ng-pattern="/^[A-Z]{1,3}$/" ng-maxlength="3" ng-model="score.player" required/>
-          </div>
-      </div>
-      <div class="form-group">
-          <label for="points" class="col-md-4 control-label">Points</label>
-          <div class="col-md-8">
-            <input type="text" value="{{points}}" placeholder="{{points}}" ng-model="score.points" readonly/>
-          </div>
-      </div>
-      <div class="form-group">
-          <div class="col-md-offset-4 col-md-8">
-              <button type="submit" class="btn btn-primary">OK</button>
-          </div>
+  <h1>You scored {{points}} points!</h1>
+  <h2>Get your initials to the hall-of-fame:</h2>
+  <form class="form-horizontal">
+    <input type="hidden" value="{{points}}" ng-model="score.points" readonly/>
+    <input type="hidden"  value="2" ng-model="score.gameid"/>
+      <div class="TLA-wrapper">
+        <input id="TLA" type="text" placeholder="AAA" maxlength="3" ng-model="score.player" required />
       </div>
   </form>
+  <br />
+  <div>
+    <input type="button" class="btn btn-primary" ng-click="submitScore()" value="OK" />
+  </div>
 </div>

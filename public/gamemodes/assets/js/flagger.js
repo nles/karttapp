@@ -91,6 +91,7 @@ window.Flagger = {
     it.text(it.attr("data-swap")).attr("data.swap",_itT);
   },
   giveHint: function(){
+    window.Flagger.scope.multiplier = 0;
     Map.map.map.setCenter(new google.maps.LatLng(47.04780089030736, 16.15828997192377))
     Map.map.map.setZoom(1);
     $("#gmaps .overlay:not(.guessed)").fadeIn(function(){
@@ -118,6 +119,10 @@ window.Flagger = {
         answerCountry = Map.getCountryNameByCode(cc);
         if(cc == Flagger.selectedFlagCC){
           // toimet jos vastaus on oikein
+          //pisteiden lasku
+          
+          window.Flagger.scope.points += Math.pow(Flagger.scope.multiplier,2)+(37*Flagger.scope.multiplier);
+          window.Flagger.scope.multiplier += 1;
           // maalataan vastaus keskelle maata
           var flagOnMenu = $("#flag-menu a.selected");
           center = Map.getActivePolygonCenter();
@@ -161,9 +166,16 @@ window.Flagger = {
                 if(e && cc === e.countryCode.toUpperCase()) Flagger.scope.flags.splice(i,1)
               })
             })
+            //lopeta peli
+            if(Flagger.scope.flags.length === 0){
+              Flagger.endGame();
+            }
           }
         } else {
           // toimet jos vastaus on väärin
+
+          //nollataan multiplier
+          window.Flagger.scope.multiplier = 0;
           Map.guessedPolygons.push(polygon)
           // maalataan
           this.setOptions({
@@ -185,5 +197,10 @@ window.Flagger = {
     $.each(Map.guessedPolygons,function(i,e){
       e.setOptions({"fillOpacity":0,"strokeWeight":0})
     })
+  },
+  endGame: function(){
+    Flagger.scope.score.gameid = Flagger.scope.gameMode
+    Flagger.scope.score.points = Flagger.scope.points
+    Connect.generatePopup('savescore-popup');
   }
 }

@@ -34,20 +34,21 @@ angular.module('karttapp.gamemodes')
   window.Flagger.init();
 
   $scope.submitScore = function(){
+    console.log($scope.score)
+    $.magnificPopup.close();
     $http.post('/saveScore', {
-      player: $scope.score.player,
+      player: $scope.score.player.toUpperCase(),
       gameid: $scope.score.gameid,
       points: $scope.score.points,
       groupid: $scope.groupid
-    }).success(function(){
-      $.magnificPopup.close();
+    })
+    .success(function(){
       $scope.endGame();
-      $location.url('/scoreboard/'+$scope.score.gameid);
-    }).error(function(data,status){
+      $location.url('/scoreboard/'+$rootScope.gameMode);
+    })
+    .error(function(data,status){
       console.log("error "+status+" with "+data);
-      $.magnificPopup.close();
-      $scope.endGame();
-      $location.url('/')
+      $location.url('/scoreboard/'+$rootScope.gameMode);
     });
 
   };
