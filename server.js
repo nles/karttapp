@@ -3,7 +3,7 @@
  *  Mean container for dependency injection
  */
 var mean = require('meanio');
-mean.app('Mean Demo App',{});
+mean.app('Karttapp',{});
 
 /**
  * Module dependencies.
@@ -26,7 +26,7 @@ var app = require('./server/config/system/bootstrap')(passport, db);
 
 // Start the app by listening on <port>
 app.listen(config.port);
-console.log('Express app started on port ' + config.port);
+console.log('Karttapp started on port ' + config.port);
 
 // Initializing logger
 logger.init(app, passport, mongoose);
