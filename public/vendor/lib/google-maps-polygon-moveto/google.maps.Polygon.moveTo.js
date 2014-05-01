@@ -19,7 +19,7 @@ if (!google.maps.Polygon.prototype.moveTo) {
 
 			// loop all the points of the original path and calculate the bearing + distance of that point relative to the center of the shape
 			for (var p = 0; p < paths.getLength(); p++) {
-				path = paths.getAt(p);
+				var path = paths.getAt(p);
 				newPoints.push([]);
 
 				for (var i = 0; i < path.getLength(); i++) {
@@ -53,7 +53,7 @@ if (!google.maps.Polygon.prototype.moveTo) {
 				var normalizedPoint = map.getProjection().fromLatLngToPoint(latlng); // returns x,y normalized to 0~255
 				var scale = Math.pow(2, map.getZoom());
 				var pixelCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
-				return pixelCoordinate; 
+				return pixelCoordinate;
 			};
 			var pointToLatlng = function(map, point){
 				var scale = Math.pow(2, map.getZoom());
@@ -72,7 +72,7 @@ if (!google.maps.Polygon.prototype.moveTo) {
 
 			// adjust all paths
 			for (var p = 0; p < paths.getLength(); p++) {
-				path = paths.getAt(p);
+				var path = paths.getAt(p);
 				newPaths.push([]);
 				for (var i = 0; i < path.getLength(); i++) {
 					var pixels = latlngToPoint(this.map, path.getAt(i));

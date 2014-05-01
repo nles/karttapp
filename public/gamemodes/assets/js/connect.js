@@ -36,7 +36,7 @@ window.Connect = {
   },
 
   countryClick: function(e,d){
-    polygon = this;
+    var polygon = this;
     var cc = polygon.get("COUNTRYCODE")
     // sallitaan vain sellaiset joita ei ole jo arvattu tai vastattu
     if($.inArray(cc, Connect.guessed) === -1 && $.inArray(cc, Connect.correctAnswersOpened) === -1){
@@ -75,7 +75,9 @@ window.Connect = {
             "strokeWeight":1
           })
           // animoi liikettä
-          center = Map.getActivePolygonCenter()
+          var center = Map.getActivePolygonCenter()
+          var cLat = center.lat();
+          var cLng = center.lng();
           for(var i = 1; i <= 5; i++){
             if(i == 5){
               x = 0;
@@ -83,7 +85,7 @@ window.Connect = {
               var x = 1/i;
               if(i % 2 == 0) x = x * (-1)
             }
-            setTimeout("Map.movePolygon("+x+",0)",50*i)
+            setTimeout("Map.movePolygon("+cLat+","+cLng+","+x+",0)",50*i)
           }
           // näytetään viesti
           addMessage(Connect,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger");
@@ -194,7 +196,7 @@ window.Connect = {
         }
     })
     // poistetaan vastaus
-    for(i in Connect.questions){
+    for(var i in Connect.questions){
       if(Connect.questions[i].country == Connect.correctAnswer) Connect.questions.splice(i,1);
     }
   },

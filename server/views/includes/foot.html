@@ -3,10 +3,11 @@
 	<script type="text/javascript" src="{{file}}"></script>
 {% endfor %}
 	
+<!-- not in assets.json, because uglify breaks these ... -->
+<script type="text/javascript" src="public/system/lib/gmaps/gmaps.js"></script>
+
 {% if (process.env.NODE_ENV == 'development') %}
 	<!-- Livereload script rendered -->
 	<script type="text/javascript" src="{{'http://' + req.host + ':35729/livereload.js'}}"></script>
 {% endif %}
-
-<script type="text/javascript" src="/modules/aggregated.js"></script>
 

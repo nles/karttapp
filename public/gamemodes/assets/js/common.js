@@ -67,10 +67,10 @@ window.Map = {
     //Layeri jokaiselle maalle
     $.getJSON("public/public/data/countries/countries.geo.json",function(data){
       Map.allPolygons = new Array();
-      for(i in data.features){
+      for(var i in data.features){
         var country = data.features[i]
         var type = country.geometry.type
-        polygonOptions = {
+        var polygonOptions = {
           paths: country.geometry.coordinates,
           useGeoJSON: true,
           strokeOpacity: 1,
@@ -79,7 +79,7 @@ window.Map = {
           fillOpacity: 0,
         }
         if(game.countryClick) polygonOptions.click = game.countryClick
-        countryPolygon = Map.map.drawPolygon(polygonOptions)
+        var countryPolygon = Map.map.drawPolygon(polygonOptions)
         countryPolygon.set("COUNTRYCODE",country.id);
         Map.allPolygons.push(countryPolygon)
       }
@@ -105,13 +105,13 @@ window.Map = {
     })
     return bounds.getCenter();
   },
-  movePolygon: function(x,y){
-    this.activeCountryPolygon.moveTo(new google.maps.LatLng(center.lat()+y, center.lng()+x))
+  movePolygon: function(cLat,cLng,x,y){
+    this.activeCountryPolygon.moveTo(new google.maps.LatLng(cLat+y, cLng+x))
   },
-  drawOverlay: function(lat,lng,text,color,id,extraClasses,keepHidden){
+  drawOverlay: function(lat,lng,text,color,id,extraClasses,hide){
     if(id) id = 'id="'+id+'" '; else id = "";
-    if(keepHidden) hide = ';display:none;'; else hide = "";
     if(extraClasses) extraClasses = " "+extraClasses; else extraClasses = "";
+    if(hide) hide = ';display:none;'; else hide = "";
     return this.map.drawOverlay({
       lat: lat,
       lng: lng,
@@ -147,7 +147,7 @@ function clearTimer(){
 
 function addMessage(game,text,type,flash){
   $("#status").show()
-  duplicateMessage = false;
+  var duplicateMessage = false;
   $.each(game.scope.roundMessages,function(i,e){
     if(e.text === text) duplicateMessage = true;
   });

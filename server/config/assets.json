@@ -1,6 +1,6 @@
 {
   "css": {
-    "public/build/css/dist.min.css": [
+    "build/css/dist.min.css": [
       "public/system/lib/bootstrap/dist/css/bootstrap.css",
       "public/system/lib/magnific-popup/dist/magnific-popup.css",
       "public/system/lib/pick-a-color/build/1.2.0/css/pick-a-color-1.2.0.min.css",
@@ -8,7 +8,7 @@
     ]
   },
   "js": {
-    "public/build/js/dist.min.js": [
+    "build/js/dist.min.js": [
       "public/system/lib/angular/angular.js",
       "public/system/lib/angular-cookies/angular-cookies.js",
       "public/system/lib/angular-resource/angular-resource.js",
@@ -16,12 +16,11 @@
       "public/system/lib/jquery/jquery.min.js",
       "public/system/lib/angular-bootstrap/ui-bootstrap.js",
       "public/system/lib/angular-bootstrap/ui-bootstrap-tpls.js",
-      "public/system/lib/gmaps/gmaps.js",
       "public/system/lib/pick-a-color/build/1.2.2/js/pick-a-color-1.2.2.min.js",
       "public/system/lib/pick-a-color/build/dependencies/tinycolor-0.9.15.min.js",
       "public/system/lib/magnific-popup/dist/jquery.magnific-popup.js",
-      "public/system/lib/google-maps-polygon-moveto/google.maps.Polygon.getBounds.js",
-      "public/system/lib/google-maps-polygon-moveto/google.maps.Polygon.moveTo.js",
+      "public/vendor/lib/google-maps-polygon-moveto/google.maps.Polygon.getBounds.js",
+      "public/vendor/lib/google-maps-polygon-moveto/google.maps.Polygon.moveTo.js",
       "public/init.js",
       "public/*/*.js",
       "public/*/*/*.js",
