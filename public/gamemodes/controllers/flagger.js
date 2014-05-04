@@ -4,26 +4,17 @@ angular.module('karttapp.gamemodes')
 .controller('FlaggerController', ['$scope', '$rootScope', '$http', '$location', 'GameMode', function ($scope, $rootScope, $http, $location, GameMode) {
   $scope.score = {};
   // pelimoodin id tietokantaa varten
-  //connect-pelin kysymysten lisäysmahdollisuuden vuoksi id:n oltava suuri
   $rootScope.gameMode = 2;
   // pelimoodin nimi
   $scope.pageHeader = "Flagger";
   // pisteiden alustus
   $scope.points = 0;
   // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
-  $scope.multiplier = 0;
+  $scope.multiplier = 1;
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
   $scope.levelEffect = {1: 'success', 2: 'warning', 3: 'danger'}
   //
   $scope.flags = new Array();
-
-  $scope.groups = [{name: "Easy",id: 1},{name: "Moderate",id: 2},{name: "Hard",id: 3}]
-  $scope.groupid = 0;
-  $scope.setGroupid = function(id){
-    $scope.groupid = id;
-    window.Flagger.startGame()
-    //..
-  }
 
   // estetään tilan vaihtaminen kesken pelin
   $scope.gameStarted = GameMode.gameStarted();
@@ -34,13 +25,12 @@ angular.module('karttapp.gamemodes')
   window.Flagger.init();
 
   $scope.submitScore = function(){
-    console.log($scope.score)
     $.magnificPopup.close();
     $http.post('/saveScore', {
+      gameid: $rootScope.gameMode,
       player: $scope.score.player.toUpperCase(),
-      gameid: $scope.score.gameid,
       points: $scope.score.points,
-      groupid: $scope.groupid
+      groupid: $scope.score.groupid
     })
     .success(function(){
       $scope.endGame();

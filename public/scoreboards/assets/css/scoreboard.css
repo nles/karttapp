@@ -1,10 +1,17 @@
 .hall-of-fame{
-	max-width: 1080px;
+  max-width: 1080px;
 }
 .no-score{
-	width: 100%;
-	background: rgba(0,0,0,0.85);
-	color:white;
-	padding: 10%;
-	text-align: center;
+  width: 100%;
+  background: rgba(0,0,0,0.85);
+  color:white;
+  padding: 20px;
+  text-align: center;
+}
+#group-select {
+  text-align: center;
+  padding: 0px 5px;
+}
+#group-select .btn {
+  margin-bottom: 10px;
 }

@@ -88,7 +88,7 @@ window.Connect = {
             setTimeout("Map.movePolygon("+cLat+","+cLng+","+x+",0)",50*i)
           }
           // näytetään viesti
-          addMessage(Connect,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger");
+          addMessage(Connect,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger",false,true);
         }
       }
     }

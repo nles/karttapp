@@ -19,3 +19,7 @@
 }
 #gmaps .overlay:hover { opacity: 0.2; }
 .overlay-copy { position: fixed; z-index: 9999999; }
+
+#round-starter #region-select a {
+  display: block; width: 100%; margin-top: 5px;
+}

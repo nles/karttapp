@@ -2,7 +2,9 @@ window.Flagger = {
   scope: null,
   flags: [],
   guesses: [],
+  regionCode: [],
   selectedFlagCC: null,
+  guessingStarted: false,
   init: function(){
     // tässä vaiheessa angular on jo luonut scopen,
     // joten otetaan se käyttöön
@@ -20,10 +22,46 @@ window.Flagger = {
     Map.setupMap(Flagger,function(){
       setTimeout(function(){
         $("#overlay-wrapper").show();
-        startGame(Flagger);
+        $("#points-and-multiply").hide();
         $.magnificPopup.close();
       },200)
     })
+  },
+  regionSelect: function(trigger){
+    var subRegionCode = parseInt($(trigger).attr("data-src"))
+    switch(subRegionCode){
+      case 150: // Europe
+        Flagger.regionCode = subRegionCode;
+        Flagger.regionFocus = new google.maps.LatLng(47.04780089030736, 16.15828997192377)
+      break;
+      case 002:// Africa
+        Flagger.regionCode = subRegionCode;
+        Flagger.regionFocus = new google.maps.LatLng(1.2303741774326145, 21.796875)
+      break;
+      case 142: // Asia
+        Flagger.regionCode = subRegionCode;
+        Flagger.regionFocus = new google.maps.LatLng(37.16031654673677, 72.59765625)
+      break;
+      case 009: // Oceania
+        Flagger.regionCode = subRegionCode;
+        Flagger.regionFocus = new google.maps.LatLng(-27.215556209029675, 149.94140625)
+      break;
+      case 019: // Americas
+        Flagger.regionCode = subRegionCode;
+        Flagger.regionFocus = new google.maps.LatLng(18.979025953255267, -81.2109375)
+      break;
+    }
+    $("#round-info").show();
+    $("#memorize-info").show();
+    $("#round-starter").hide();
+    startGame(Flagger);
+  },
+  startGuessing: function(){
+    window.clearTimeout(window.startTimer);
+    Flagger.hideFlagsFromMap();
+    $("#round-info").hide();
+    $("#points-and-multiply").show();
+    Flagger.guessingStarted = true;
   },
   skipQuestion: function(){
 
@@ -32,16 +70,16 @@ window.Flagger = {
     var regionData = new Array();
     for(var i in Map.countryData){
       var country = Map.countryData[i];
-      if(country["region-code"] == 150){
+      if(country["region-code"] == Flagger.regionCode){
         regionData.push(country);
       }
     }
 
-    countries = new Array();
-    usedIndexes = new Array();
+    var countries = new Array();
+    var usedIndexes = new Array();
     for(var i = 0; i < 6; i++){
       do {
-        index = getRandomInt(0,regionData.length-1);
+        var index = getRandomInt(0,regionData.length-1);
       } while($.inArray(index,usedIndexes) != -1);
       usedIndexes.push(index);
       countries.push(regionData[index]["alpha-3"]);
@@ -51,30 +89,27 @@ window.Flagger = {
       var polygon = Map.allPolygons[i];
       var cc = polygon.get("COUNTRYCODE").toLowerCase()
       if($.inArray(polygon.get("COUNTRYCODE"), countries) != -1){
-        center = Map.getPolygonCenter(polygon);
-        flag = "<img src='/public/gamemodes/assets/images/flags/"+cc+".png' />"
+        var center = Map.getPolygonCenter(polygon);
+        var flag = "<img src='/public/gamemodes/assets/images/flags/"+cc+".png' />"
         Map.drawOverlay(center.lat(),center.lng(),flag,"fff");
         Flagger.scope.flags.push({countryCode:cc})
       }
-      setTimeout(function(){
-        Map.map.map.setCenter(new google.maps.LatLng(47.04780089030736, 16.15828997192377))
-        Map.map.map.setZoom(4);
-      },200);
+      Map.map.map.setZoom(1);
     }
-    var startTimer = window.setInterval(function(){
-      var progressBarWidth = progressBar.width();
-      progressBar.width(progressBarWidth + 20);
-      if(progressBarWidth >= progressBarWrapperWidth){
-        window.clearTimeout(startTimer);
-        Flagger.hideFlagsFromMap();
+    var progressPercentWidth = 0;
+    window.startTimer = window.setInterval(function(){
+      progressPercentWidth += 0.75;
+      progressBar.width(progressPercentWidth + "%");
+      if(progressPercentWidth >= 100){
+        Flagger.startGuessing();
       }
-    },500)
+    },100)
   },
   hideFlagsFromMap: function(){
-    copies = $('<div id="ocs">');
+    var copies = $('<div id="ocs">');
     $("#gmaps .overlay").each(function(i,e){
-      pos = $(e).offset();
-      copy = $("<div class='overlay overlay-copy'>"+e.innerHTML+"</div>")
+      var pos = $(e).offset();
+      var copy = $("<div class='overlay overlay-copy'>"+e.innerHTML+"</div>")
       copy.css("top",pos.top).css("left",pos.left)
       copies.append(copy);
     })
@@ -89,10 +124,13 @@ window.Flagger = {
     var it = $("#flag-menu .info-text")
     var _itT = it.text();
     it.text(it.attr("data-swap")).attr("data.swap",_itT);
+    $("#skip-memorizing").hide();
   },
   giveHint: function(){
-    window.Flagger.scope.multiplier = 0;
-    Map.map.map.setCenter(new google.maps.LatLng(47.04780089030736, 16.15828997192377))
+    Flagger.scope.$apply(function(){
+      Flagger.scope.multiplier = 1;
+    });
+    Map.map.map.setCenter(Flagger.regionFocus)
     Map.map.map.setZoom(1);
     $("#gmaps .overlay:not(.guessed)").fadeIn(function(){
       setTimeout(function(){
@@ -101,34 +139,35 @@ window.Flagger = {
     });
   },
   countryClick: function(e,d){
+    if(!Flagger.guessingStarted) return
     if(!Flagger.selectedFlagCC){
       addMessage(Flagger,"Start by selecting a flag from the flag menu","info",true);
       return
     }
-    polygon = this;
-    answer = "FIN"
+    var polygon = this;
     var cc = polygon.get("COUNTRYCODE")
     // sallitaan vain sellaiset joita ei ole jo arvattu tai vastattu
-    if($.inArray(cc,Map.quessedCountries)){
+    if($.inArray(cc,Map.guessedCountries)){
       // sallitaan vastaus sekunnin välein
       if(Map.allowClick){
         Map.allowClick = false
         window.setTimeout(function(){ Map.allowClick = true },1000);
         Map.guessedCountries.push(cc)
         Map.activeCountryPolygon = polygon;
-        answerCountry = Map.getCountryNameByCode(cc);
+        var answerCountry = Map.getCountryNameByCode(cc);
         if(cc == Flagger.selectedFlagCC){
           // toimet jos vastaus on oikein
           //pisteiden lasku
-          
-          window.Flagger.scope.points += Math.pow(Flagger.scope.multiplier,2)+(37*Flagger.scope.multiplier);
-          window.Flagger.scope.multiplier += 1;
+          Flagger.scope.$apply(function(){
+            Flagger.scope.points += 100 * Flagger.scope.multiplier;
+            Flagger.scope.multiplier += 1;
+          })
           // maalataan vastaus keskelle maata
           var flagOnMenu = $("#flag-menu a.selected");
-          center = Map.getActivePolygonCenter();
-          flag = "<img src='/public/gamemodes/assets/images/flags/"+cc.toLowerCase()+".png' />"
+          var center = Map.getActivePolygonCenter();
+          var flag = "<img src='/public/gamemodes/assets/images/flags/"+cc.toLowerCase()+".png' />"
           var overlay = Map.drawOverlay(center.lat(),center.lng(),flag,"fff","flagJustAdded","guessed",true)
-          addMessage(Flagger,"You answered <strong>"+answerCountry+"</strong> correctly!","success");
+          addMessage(Flagger,"You answered <strong>"+answerCountry+"</strong> correctly!","success",false,true);
           // poistetaan maalaukset
           $.each(Map.guessedPolygons,function(i,e){
             e.setOptions({"fillOpacity":0,"strokeWeight":0})
@@ -139,14 +178,13 @@ window.Flagger = {
             $('body').append(flyingMap)
             var addedFlag = $("#flagJustAdded")
             var posOnMenu= flagOnMenu.offset();
-            var posOnMap = addedFlag.offset();
             addedFlag.show();
-            addedFlagOffset = addedFlag.offset();
+            var addedFlagOffset = addedFlag.offset();
             flyingMap
-            .css("position","fixed")
-            .css("z-index",1000)
-            .css("left",posOnMenu.left+2)
-            .css("top",posOnMenu.top+2)
+              .css("position","fixed")
+              .css("z-index",1000)
+              .css("left",posOnMenu.left+2)
+              .css("top",posOnMenu.top+2)
             var flyToTop = addedFlagOffset.top-(addedFlag.height()/2)
             var flyToLeft = addedFlagOffset.left-(addedFlag.width()/2)
             //
@@ -173,9 +211,9 @@ window.Flagger = {
           }
         } else {
           // toimet jos vastaus on väärin
-
-          //nollataan multiplier
-          window.Flagger.scope.multiplier = 0;
+          Flagger.scope.$apply(function(){
+            Flagger.scope.multiplier = 1;
+          });
           Map.guessedPolygons.push(polygon)
           // maalataan
           this.setOptions({
@@ -183,14 +221,14 @@ window.Flagger = {
             "strokeWeight":1
           })
           // näytetään viesti
-          addMessage(Flagger,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger");
+          addMessage(Flagger,"You guessed <strong>"+answerCountry+"</strong>, but that was incorrect","danger",false,true);
         }
       }
     }
   },
   setSelectedFlag: function(element){
     $("#flag-menu ul li a").removeClass("selected");
-    e = $(element)
+    var e = $(element)
     e.addClass("selected")
     this.selectedFlagCC = e.attr("data-cc").toUpperCase();
     // värit takaisin
@@ -199,7 +237,7 @@ window.Flagger = {
     })
   },
   endGame: function(){
-    Flagger.scope.score.gameid = Flagger.scope.gameMode
+    Flagger.scope.score.groupid = Flagger.regionCode
     Flagger.scope.score.points = Flagger.scope.points
     Connect.generatePopup('savescore-popup');
   }

@@ -1,16 +1,29 @@
 <div id="gmaps"></div>
 <div id="overlay-wrapper" style="display:none">
   <div id='overlay-content'>
-    <div id="round-info">
+    <div id="round-info" style="display:none">
       <div class="progress progress-striped active">
         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
         </div>
       </div>
     </div>
     <div id="flag-menu">
-      <!-- Tähän lippuvalikko... Voisivat määräytyä satunaisesti -->
-      <!-- Lipuista pitää myös pystyä klikkaamaan ja saada selkeä kuva siitä mikä lippu valittuna -->
-      <p class="info-text" data-swap="Now try to place the flags to correct countries.">Try to remember the country of all the flags visible now. You have 5 seconds!</p>
+      <div id="round-starter">
+        <p>Select the region you want to Flag</p>
+        <div id="region-select">
+          <a href="javascript:void(0)" onclick="Flagger.regionSelect(this)" class="btn btn-default" data-src="150">Europe</a>
+          <a href="javascript:void(0)" onclick="Flagger.regionSelect(this)" class="btn btn-default" data-src="002">Africa</a>
+          <a href="javascript:void(0)" onclick="Flagger.regionSelect(this)" class="btn btn-default" data-src="142">Asia</a>
+          <a href="javascript:void(0)" onclick="Flagger.regionSelect(this)" class="btn btn-default" data-src="009">Oceania</a>
+          <a href="javascript:void(0)" onclick="Flagger.regionSelect(this)" class="btn btn-default" data-src="019">Americas</a>
+        </div>
+      </div>
+      <div id="memorize-info" style="display: none">
+        <p class="info-text" data-swap="Now try to place the flags to correct countries.">
+        Try to remember the country of all the flags visible now. The game starts when the bar above is full!
+        </p>
+        <a href="javascript:void(0)" onclick="Flagger.startGuessing()" id="skip-memorizing" class="btn btn-primary btn-xs pull-right">Start already</a>
+      </div>
       <ul>
         <li ng-repeat="flag in flags">
           <a data-cc="{{flag.countryCode}}" href="javascript:void(0)" onclick="Flagger.setSelectedFlag(this)"><img ng-src="/public/gamemodes/assets/images/flags/{{flag.countryCode}}.png" /></a>
@@ -48,12 +61,10 @@
   </div>
   <div class="popup-content">
     <h1>Flagger</h1>
-    <p>In this game, your goal is to connect a country to its flag</p>
-    <p>Start by clicking a flag on the flag menu, and then click a country on the map to connect it.</p>
-    <p>You get points from ...</p>
-    <div id="question-group-list" class="btn-group-vertical">
-      <div class="btn btn-{{+ levelEffect[group.id]}}" ng-repeat="group in groups" data-group='{{group.id}}' ng-click="setGroupid(this.group.id)">{{group.name}}</div>
-    </div>
+    <p>In this game, your goal is to connect a country to its flag.</p>
+    <p>After you select a region, you have a while to remember
+    the flags on the map. Have fun!</p>
+    <a class="btn btn-primary" onclick="Flagger.startGame()" style="width:100%; text-align: center;">Start the game</a>
   </div>
 </div>
 

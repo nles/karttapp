@@ -145,13 +145,15 @@ function clearTimer(){
   progressBar.width(0);
 }
 
-function addMessage(game,text,type,flash){
+function addMessage(game,text,type,flash,allowDuplicates){
   $("#status").show()
-  var duplicateMessage = false;
-  $.each(game.scope.roundMessages,function(i,e){
-    if(e.text === text) duplicateMessage = true;
-  });
-  if(!duplicateMessage){
+  if(!allowDuplicates){
+    var duplicateMessage = false;
+    $.each(game.scope.roundMessages,function(i,e){
+      if(e.text === text) duplicateMessage = true;
+    });
+  }
+  if(allowDuplicates || !duplicateMessage){
     game.scope.$apply(function(){
       game.scope.roundMessages.unshift({text: text, type: type});
     });
