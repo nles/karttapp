@@ -145,13 +145,15 @@ function clearTimer(){
   progressBar.width(0);
 }
 
-function addMessage(game,text,type,flash){
+function addMessage(game,text,type,flash,allowDuplicates){
   $("#status").show()
-  var duplicateMessage = false;
-  $.each(game.scope.roundMessages,function(i,e){
-    if(e.text === text) duplicateMessage = true;
-  });
-  if(!duplicateMessage){
+  if(!allowDuplicates){
+    var duplicateMessage = false;
+    $.each(game.scope.roundMessages,function(i,e){
+      if(e.text === text) duplicateMessage = true;
+    });
+  }
+  if(allowDuplicates || !duplicateMessage){
     game.scope.$apply(function(){
       game.scope.roundMessages.unshift({text: text, type: type});
     });
@@ -167,7 +169,6 @@ function addMessage(game,text,type,flash){
     $.each(game.scope.roundMessages,function(i,e){
       if(e.text === text) game.scope.roundMessages.splice(i,1)
     });
-    console.log($("#status .alert:visible").length)
     if($("#status .alert:visible").length == 0) $("#status").hide()
   }
 }

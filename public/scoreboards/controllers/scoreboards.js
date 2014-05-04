@@ -11,23 +11,9 @@ angular.module('karttapp.scoreboards')
   $scope.gameName = ($stateParams.gameid == $scope.connectID)?'Connect':'Flagger';
   $scope.orderProp = "points";
   $scope.gameid = $stateParams.gameid;
-  $scope.groups = [
-    {
-      name: 'Easy',
-      id: 1
-    },
-    {
-      name: 'Moderate',
-      id: 2
-    },
-    {
-      name: 'Hard',
-      id: 3
-    }
-    
-  ]
+  $scope.groupid = 0;
   $scope.limit = function(items){
-  	return items.slice(0,10)
+    return items.slice(0,10)
   }
   $scope.filter = function(){
     return function(item){
@@ -46,26 +32,14 @@ angular.module('karttapp.scoreboards')
       }else{
         return true
       }
-      
     }
   }
   $scope.nameOfGroup = function(groupid){
-    for(var i = 0 ; i<$scope.groups.length ; i++){
+    if(!$scope.groups) return
+    for(var i = 0; i < $scope.groups.length ; i++){
       if($scope.groups[i].id == groupid){
         return $scope.groups[i].name
       }
-    }
-  }
-  $scope.nameOfLevel = function(id){
-    switch(id){
-      case 1:
-        return "Easy";
-      case 2:
-        return "Moderate";
-      case 3:
-        return "Hard";
-      default:
-        return "Unknown";
     }
   }
   $scope.findScores = function(){
@@ -75,7 +49,16 @@ angular.module('karttapp.scoreboards')
       $scope.scores = scores;
     })
     if($stateParams.gameid == 1){
-      $scope.getGroups()  
+      $scope.getGroups()
+    }
+    if($stateParams.gameid == 2){
+      $scope.groups = [
+        { name: 'Europe', id: 150 },
+        { name: 'Africa', id: 2 },
+        { name: 'Asia', id: 142 },
+        { name: 'Oceania', id: 9 },
+        { name: 'Americas', id: 19 }
+      ]
     }
   }
   $scope.getGroups = function(){

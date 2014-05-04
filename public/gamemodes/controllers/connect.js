@@ -45,6 +45,10 @@ angular.module('karttapp.gamemodes')
   }
   $scope.voted = false
   $scope.like = function(like){
+    if(!$scope.score.player || $scope.score.player == ""){
+      $scope.showErr = true
+      return
+    }
     $scope.voted = true
     var continueToHOF = function(){
       setTimeout(function(){

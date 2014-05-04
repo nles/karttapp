@@ -11,16 +11,12 @@ angular.module('karttapp.system')
       'link': 'home'
     },{
       'roles': ['anonymous','authenticated'],
-      'title': 'HALL OF FAME',
+      'title': 'Hall Of Fame',
       'link': 'scoreboard'
     },{
       'roles': ['authenticated'],
       'title': 'Update data',
       'link': 'connect'
-    },{
-      'roles': ['anonymous','authenticated'],
-      'title': 'Create new question',
-      'link': 'questions'
     }]
   }
 
