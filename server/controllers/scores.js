@@ -19,7 +19,7 @@ exports.scores = function(req, res, next, gameid) {
 };
 
 /**
-* Create an gamepoint
+* Create an score
 */
 exports.create = function(req, res, next) {
   var score = new Score(req.body);
@@ -34,7 +34,7 @@ exports.create = function(req, res, next) {
 
 /**
 *
-* List of scores
+* Get all scores
 */
 exports.all = function(req,res,next){
   Score.find().sort('points').exec(function(err,scores){

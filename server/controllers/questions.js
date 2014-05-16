@@ -34,7 +34,7 @@ exports.create = function(req, res, next) {
 
 /**
 *
-* List of questions
+* Get all questions
 */
 exports.all = function(req,res,next){
   Question.find().exec(function(err,questions){
@@ -49,7 +49,7 @@ exports.all = function(req,res,next){
 
 }
 /*
-* Show a score
+* Show a question
 */
 exports.show = function(req,res){
   res.jsonp(req.questions);

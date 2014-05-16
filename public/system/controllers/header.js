@@ -14,19 +14,6 @@ angular.module('karttapp.system')
       'link': 'scoreboard'
     }]
   }
-/*
-  Menus.query({
-    name: 'main'
-  }, function(mainMenu) {
-    $scope.menus.main = $scope.menus.main.concat(mainMenu);
-  });
-
-  $scope.isCollapsed = true;*/
-//SWAP
-
-
-  // Default hard coded menu items for main menu
-  var defaultMainMenu = [];
 
   Menus.query({
     name: 'main',

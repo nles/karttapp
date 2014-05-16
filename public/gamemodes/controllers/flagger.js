@@ -2,18 +2,20 @@
 
 angular.module('karttapp.gamemodes')
 .controller('FlaggerController', ['$scope', '$rootScope', '$http', '$location', 'GameMode', function ($scope, $rootScope, $http, $location, GameMode) {
+  //init score
   $scope.score = {};
-  // pelimoodin id tietokantaa varten
+  // init gameid for database
   $rootScope.gameMode = 2;
-  // pelimoodin nimi
+  // name of the game
   $scope.pageHeader = "Flagger";
-  // pisteiden alustus
+  // init points
   $scope.points = 0;
-  // pistekerroin, joka kertyy putkeen vastatuista oikeista vastauksista.
+  // init point multiplier
   $scope.multiplier = 1;
+
   $scope.multiplierEffect = {0:'danger',1:'warning',2:'info',3:'success'}
   $scope.levelEffect = {1: 'success', 2: 'warning', 3: 'danger'}
-  //
+  //init flags
   $scope.flags = new Array();
 
   // estetään tilan vaihtaminen kesken pelin
@@ -24,6 +26,7 @@ angular.module('karttapp.gamemodes')
   // ajetaan "ulkoinen" koodi täältä controllerista (view ladattu)
   window.Flagger.init();
 
+  //save score to database and continues to HALL OF FAME - page
   $scope.submitScore = function(){
     $.magnificPopup.close();
     $http.post('/saveScore', {
