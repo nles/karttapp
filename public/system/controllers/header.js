@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('karttapp.system')
-.controller('HeaderController',['$scope', '$rootScope', 'Global', 'Menus', function($scope, $rootScope, Global, Menus) {
-  $scope.global = Global;
+.controller('HeaderController',['$scope', '$rootScope', 'Menus', function($scope, $rootScope, Menus) {
 
   $scope.menus = {
     main: [{
@@ -13,26 +12,29 @@ angular.module('karttapp.system')
       'roles': ['anonymous','authenticated'],
       'title': 'Hall Of Fame',
       'link': 'scoreboard'
-    },{
-      'roles': ['authenticated'],
-      'title': 'Update data',
-      'link': 'connect'
     }]
   }
-
+/*
   Menus.query({
     name: 'main'
   }, function(mainMenu) {
     $scope.menus.main = $scope.menus.main.concat(mainMenu);
   });
 
-  $scope.isCollapsed = true;
+  $scope.isCollapsed = true;*/
+//SWAP
 
-  $rootScope.$on('loggedin', function() {
-    $scope.global = {
-      authenticated: !! $rootScope.user,
-      user: $rootScope.user
-    };
+
+  // Default hard coded menu items for main menu
+  var defaultMainMenu = [];
+
+  Menus.query({
+    name: 'main',
+  }, function(menu) {
+    $scope.menus.main = $scope.menus.main.concat(menu);
   });
+
+
+  $scope.isCollapsed = false;
 
 }]);

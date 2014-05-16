@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbar-collapse" collapse="isCollapsed">
       <ul class="nav navbar-nav">
         <li data-ng-repeat="item in menus.main" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-          <a data-ng-if="global.hasRole(item.roles)" ui-sref='{{item.link}}'>{{item.title}}</a>
+          <a ui-sref='{{item.link}}'>{{item.title}}</a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->

@@ -1,9 +1,8 @@
 'use strict';
 
 angular.module('karttapp.scoreboards')
-.controller('ScoreboardController', ['$scope', '$stateParams', '$location', 'Global', 'Scoreboard', 'Group' , function ($scope, $stateParams, $location, Global, Scoreboard, Group) {
+.controller('ScoreboardController', ['$scope', '$stateParams', '$location', 'Scoreboard', 'Group' , function ($scope, $stateParams, $location, Scoreboard, Group) {
 
-  $scope.global = Global;
   $scope.connectID = 1;
   $scope.flaggerID = 2;
   $scope.quantityOfScores = 10;

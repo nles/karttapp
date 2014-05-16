@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('karttapp.questions')
-.controller('QuestionsController', ['$scope', '$stateParams','$http', '$location', 'Global', 'Countries', 'Group' , function ($scope, $stateParams, $http, $location, Global, Countries, Group) {
+.controller('QuestionsController', ['$scope', '$stateParams','$http', '$location', 'Countries', 'Group' , function ($scope, $stateParams, $http, $location, Countries, Group) {
 	$scope.countries = []
 	$scope.groupid = null;
 	Countries.success(function(data){

@@ -11,9 +11,6 @@ angular.module('karttapp.system').config(
     url: '/',
     templateUrl: 'public/system/views/index.html'
   })
-  .state('auth', {
-    templateUrl: 'public/auth/views/index.html'
-  })
 }
 ])
 .config(

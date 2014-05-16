@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 /**
-* Find questions by groupid
+* Find group by groupid
 */
 exports.group = function(req, res, next, groupid) {
   Group.load(groupid, function(err, group) { 
@@ -19,17 +19,19 @@ exports.group = function(req, res, next, groupid) {
   });
 };
 
+/*
+* update groups likes-attribute
+*/
 exports.update = function(req,res){
   Group.update(
     {id: req.body.id},
     { $set: {likes: req.body.likes}},
     function(err,result){
-      console.log(result)
     }
   );
 }
 /**
-* Create a group
+* Create a new group
 */
 exports.create = function(req, res, next) {
   var group = new Group(req.body);
@@ -43,8 +45,8 @@ exports.create = function(req, res, next) {
 };
 
 /**
-*
-* List of groups
+* Get all groups
+* 
 */
 exports.all = function(req,res,next){
   Group.find().exec(function(err,groups){
@@ -59,7 +61,7 @@ exports.all = function(req,res,next){
 
 }
 /*
-* Show a score
+* Show a group
 */
 exports.show = function(req,res){
   res.jsonp(req.group);
