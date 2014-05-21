@@ -18,6 +18,7 @@ angular.module('karttapp.gamemodes')
   $scope.orderProp = '-likes'
   // init questions
   $scope.questions = {}
+
   /**
   * Set questions by given groupid to $scope.questions
   * @attr: groupid > 0
@@ -33,13 +34,15 @@ angular.module('karttapp.gamemodes')
   }
   //init questiongroups
   $scope.groups = {}
-  //Get all available questiongroups and set them to $scope.groups
+
+  // Get all available questiongroups and set them to $scope.groups
   $scope.getGroups = function(){
     Group.query(function(groups){
       $scope.groups = groups;
+      $scope.groupsLoaded = true;
     })
   }
-  // estetään tilan vaihtaminen kesken pelin
+  // prevent changing the game when its started
   $scope.gameStarted = GameMode.gameStarted();
   $scope.startGame = function(){ GameMode.startGame(); }
   $scope.endGame = function(){ GameMode.endGame(); }
@@ -48,8 +51,7 @@ angular.module('karttapp.gamemodes')
   $scope.groupid = 0;
 
   /*
-  * Get questions by given groupid and starts the game
-  *
+  * Gets questions by given groupid and starts the game
   */
   $scope.selectGroup = function(groupid){
     $scope.groupid = groupid;
@@ -103,7 +105,7 @@ angular.module('karttapp.gamemodes')
       }
     }
   }
-  //save score to database and continues to HALL OF FAME-page
+  //saves score to database and continues to HALL OF FAME-page
   $scope.submitScore = function(){
     $.magnificPopup.close();
     $http.post('/saveScore', {
@@ -123,7 +125,7 @@ angular.module('karttapp.gamemodes')
 
   };
 
-  // ajetaan pelimoodin koodi (view ladattu)
+  // run the main code associated with this game mode
   window.Connect.init();
 
 }]);
