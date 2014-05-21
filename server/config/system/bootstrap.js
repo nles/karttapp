@@ -32,15 +32,6 @@ module.exports = function(passport, db) {
     require(appPath + '/server/config/passport')(passport);
 
     function bootstrapDependencies() {
-        // Register passport dependency
-        mean.register('passport', function() {
-            return passport;
-        });
-
-        // Register auth dependency
-        mean.register('auth', function() {
-            return require(appPath + '/server/routes/middlewares/authorization');
-        });
 
         // Register database dependency
         mean.register('database', {

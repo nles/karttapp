@@ -2,7 +2,7 @@
 
 angular.module('karttapp.questions')
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-  // states for different scoreboards
+  // state for questions add - site
   $stateProvider
   .state('questions', {
     url: '/questions',
