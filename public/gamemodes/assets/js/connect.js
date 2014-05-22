@@ -57,7 +57,7 @@ window.Connect = {
           })
           clearTimer();
           Connect.generatePopup('color-popup');
-          $(".message","#color-popup").html("<strong>"+answerCountry+"</strong> was correct! Give a color to the country")
+          Connect.popupTextWithCompile("<strong>"+answerCountry+"</strong> was correct! Give a color to the country."+Connect.colorWhy())
           // poistetaan vastaus
           for(i in Connect.questions){
             if(Connect.questions[i].country == cc) Connect.questions.splice(i,1);
@@ -205,18 +205,29 @@ window.Connect = {
     var answerCountry = Map.getCountryNameByCode(Connect.correctAnswer);
     addMessage(Connect,"Skipped a question. The correct answer was <strong>"+answerCountry+"</strong>","warning")
     Connect.generatePopup('color-popup');
-    $(".message","#color-popup").html("Skipped. The answer was <strong>"+answerCountry+"</strong>. Give a color to the country")
+    this.popupTextWithCompile("Skipped. The answer was <strong>"+answerCountry+"</strong>. Give a color to the country."+this.colorWhy())
   },
   timeOut: function(){
     Connect.timeoutOrSkip();
     var answerCountry = Map.getCountryNameByCode(Connect.correctAnswer);
-    addMessage(Connect,"Your time ran out! The correct answer was <strong>"+answerCountry+"</strong>","warning")
+    addMessage(Connect,"Your time ran out! The correct answer was <strong>"+answerCountry+"</strong>","warning");
     Connect.generatePopup('color-popup');
-    $(".message","#color-popup").html("You ran out of time! The answer was <strong>"+answerCountry+"</strong>. Give a color to the country")
+    this.popupTextWithCompile("You ran out of time! The answer was <strong>"+answerCountry+"</strong>. Give a color to the country."+this.colorWhy());
   },
   endGame: function(){
     this.scope.score.points = this.scope.points;
     this.scope.score.gameid = this.scope.gameMode;
     Connect.generatePopup('savescore-popup');
+  },
+  popupTextWithCompile: function(html){
+    var $injector = angular.injector(['karttapp']);
+    $injector.invoke(['$rootScope','$compile', function($rootScope, $compile) {
+      $("#color-popup .message").html($compile('<div>'+html+'</div>')($rootScope));
+    }]);
+  },
+  colorWhy: function(){
+    var explanation = "Making an association with a color might help you remember better. We also gather "
+    + "this info as a statistic, so that we can create a map of countries with the colors typically associated with them."
+    return " <small style='font-size:10px;'><a href='javascript:void(0)' popover='"+explanation+"'>why?</a></small>";
   }
 }
